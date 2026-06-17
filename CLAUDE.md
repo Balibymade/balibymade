@@ -119,6 +119,8 @@ Ver blueprint sección 29. Implementado:
 - Schema.org JSON-LD en `app/[locale]/layout.tsx`: `LocalBusiness`/`TouristInformationCenter` + `Person` (Made)
 - GEO: sección FAQ visible en Home (`HomePageTranslation.faqItems`, editable en Keystone) + `FAQPage` schema.org
 - GEO: `frontend/public/llms.txt` (estático, actualizar a mano si cambian precios/servicios)
+- `robots.ts` permite explícitamente GPTBot/ClaudeBot/Google-Extended/PerplexityBot/Applebot-Extended
+- Pendiente (cuenta del cliente): Google Search Console, Bing Webmaster Tools, **Google Business Profile** (aplica — Made presta servicio en una zona geográfica concreta, Bali/Ubud)
 - Seed de SEO/FAQ: `backend/seed-seo.ts` (contenido nuevo en en/es/id/ru, fallback inglés en el resto — pendiente revisar/traducir el resto de locales)
 
 ## Pendiente antes de producción
