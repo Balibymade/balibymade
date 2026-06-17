@@ -1,5 +1,15 @@
 # balibymade.com — Contexto para Claude Code
 
+## Cuentas y accesos
+
+- **Repositorio**: https://github.com/pablopedrosa7/balibymade.com (cuenta GitHub: `pablopedrosa7`)
+- **Email para todos los registros** (Cloudflare, Vercel, Render, Supabase, registrador dominio):
+  `pablopm77+balibymade@gmail.com` (alias "+" del Gmail personal de Pablo — no se pudo crear un
+  Gmail dedicado nuevo por bloqueo de verificación SMS desde Japón). Todo llega a la bandeja
+  habitual de `pablopm77@gmail.com`, filtrable por ese alias.
+- Email público del negocio: `hola@balibymade.com` (pendiente de configurar vía Cloudflare Email
+  Routing → reenvío a `pablopm77@gmail.com`)
+
 ## Descripción del proyecto
 
 Web de Made, guía privado local en Bali (tours en coche privado, transfers de aeropuerto y
