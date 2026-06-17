@@ -1,0 +1,391 @@
+$gold:   #c9a84c;
+$cream:  #f2ecd8;
+$dark:   #0d1a11;
+$forest: #162a1c;
+$terra:  #b85738;
+
+// ── HEADER BAR ─────────────────────────────────────────
+.header {
+  position: fixed;
+  top: 40px;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  height: 68px;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.headerTransparent {
+  background: linear-gradient(to bottom, rgba(13,26,17,0.65) 0%, rgba(13,26,17,0) 100%);
+}
+
+.headerSolid {
+  background: rgba(13,26,17,0.96);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(201,168,76,0.12);
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoSub {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: $gold;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.logoMain {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: $cream;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+// ── DESKTOP NAV (hidden on mobile) ────────────────────
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+
+  @media (max-width: 860px) { display: none; }
+}
+
+.navLink {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(242,236,216,0.65);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+
+  &:hover { color: $cream; background: rgba(201,168,76,0.07); }
+}
+
+.navLinkActive {
+  color: $gold;
+  &:hover { color: $gold; }
+}
+
+// ── ACTIONS (right side of header) ────────────────────
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+// ── LANGUAGE DROPDOWN (desktop + mobile) ──────────────
+.langSelect {
+  position: relative;
+}
+
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  min-height: 44px;
+
+  &:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(201,168,76,0.3);
+  }
+}
+
+.langCode {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(242,236,216,0.75);
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.langChevron {
+  font-size: 10px;
+  color: rgba(201,168,76,0.6);
+  transition: transform 0.2s;
+  line-height: 1;
+}
+
+.langChevronOpen { transform: rotate(180deg); }
+
+.langDropdown {
+  position: fixed;
+  top: 108px;
+  right: 16px;
+  background: rgba(14,26,18,0.98);
+  border: 1px solid rgba(201,168,76,0.18);
+  border-radius: 8px;
+  padding: 4px;
+  min-width: 150px;
+  max-height: 60vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  z-index: 300;
+
+  @media (min-width: 861px) {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    max-height: 400px;
+    backdrop-filter: blur(12px);
+  }
+}
+
+.langOption {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(201,168,76,0.1); }
+}
+
+.langOptionActive {
+  background: rgba(201,168,76,0.12) !important;
+  .langOptionLabel { color: $gold; }
+}
+
+.langOptionLabel {
+  font-size: 13px;
+  color: rgba(242,236,216,0.75);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.flag {
+  border-radius: 2px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+// ── DESKTOP CTA BUTTON ────────────────────────────────
+.ctaBtn {
+  padding: 8px 18px;
+  background: $terra;
+  color: $cream;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+
+  &:hover { background: #a04830; transform: translateY(-1px); }
+
+  @media (max-width: 860px) { display: none; }
+}
+
+// ── HAMBURGER ─────────────────────────────────────────
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+
+  @media (max-width: 860px) { display: flex; }
+}
+
+.bar {
+  width: 22px;
+  height: 2px;
+  background: $cream;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.hamburgerOpen {
+  .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+
+// ── MOBILE OVERLAY ────────────────────────────────────
+// Rendered as a SIBLING to <header>, NOT inside it.
+// This avoids the backdrop-filter CSS containment bug where
+// backdrop-filter on a parent makes position:fixed children
+// position relative to the parent instead of the viewport.
+.mobileOverlay {
+  display: none;
+
+  @media (max-width: 860px) {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 108px;    // 40px Pablo topbar + 68px BMHeader
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;  // Above everything including demo shell
+    background: rgba(10,20,12,0.99);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 24px 60px;
+    gap: 0;
+    transform: translateX(100%);
+    transition: transform 0.28s ease;
+    pointer-events: none;
+  }
+}
+
+.mobileOverlayOpen {
+  @media (max-width: 860px) {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+}
+
+// Mobile nav links
+.mobileNavLink {
+  display: none;
+
+  @media (max-width: 860px) {
+    display: block;
+    font-size: 22px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    color: rgba(242,236,216,0.85);
+    text-decoration: none;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    transition: color 0.2s;
+
+    &:first-of-type { border-top: 1px solid rgba(201,168,76,0.1); }
+    &:hover { color: $gold; }
+  }
+}
+
+.mobileNavLinkActive {
+  color: $gold !important;
+}
+
+// Mobile book CTA
+.mobileCta {
+  display: none;
+
+  @media (max-width: 860px) {
+    display: block;
+    margin-top: 20px;
+    padding: 13px 28px;
+    background: $terra;
+    color: $cream;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.2s;
+
+    &:hover { background: #a04830; }
+  }
+}
+
+// Mobile language section
+.mobileLangSection {
+  display: none;
+
+  @media (max-width: 860px) {
+    display: block;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(201,168,76,0.12);
+  }
+}
+
+.mobileLangLabel {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.45);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+// 3-column grid so 22 languages are reachable without endless scrolling
+.mobileLangGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+
+  @media (max-width: 360px) { grid-template-columns: repeat(2, 1fr); }
+}
+
+.mobileLangBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: rgba(22,42,28,0.5);
+  border: 1px solid rgba(201,168,76,0.08);
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgba(242,236,216,0.5);
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  text-align: left;
+  width: 100%;
+
+  &:hover {
+    border-color: rgba(201,168,76,0.2);
+    color: $cream;
+    background: rgba(22,42,28,0.8);
+  }
+}
+
+.mobileLangBtnActive {
+  border-color: rgba(201,168,76,0.3) !important;
+  color: $gold !important;
+  background: rgba(201,168,76,0.06) !important;
+}
+
+.mobileLangName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11.5px;
+}

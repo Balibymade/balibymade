@@ -1,0 +1,8 @@
+# Este fichero NO gestiona la base de datos.
+# La BD de balibymade se arranca desde el docker-compose.yml central:
+#
+#   cd /Users/ana/Documents/Proyectos/Web
+#   docker compose up -d balibymade.com-postgres
+#
+# Puerto: 5435 | Contenedor: balibymade.com-postgres | DB: balibymade
+# DATABASE_URL local: postgresql://keystone:keystonepassword@localhost:5435/balibymade

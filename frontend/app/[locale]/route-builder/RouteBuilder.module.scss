@@ -1,0 +1,523 @@
+$dark:   #0d1a11;
+$forest: #162a1c;
+$gold:   #c9a84c;
+$cream:  #f2ecd8;
+$terra:  #b85738;
+$terraH: #a04830;
+
+// Pablo demo topbar: 40px. BMHeader fixed top:40px height:68px → total: 108px
+$headerH: 108px;
+
+.page {
+  background: $dark;
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+  color: $cream;
+}
+
+// ── HERO ──────────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  padding-top: $headerH + 32px;    // sit below fixed headers + breathing room
+  padding-bottom: 48px;
+  min-height: 340px;
+  display: flex;
+  align-items: flex-end;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 40%;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13,26,17,0.5) 0%,
+    rgba(13,26,17,0.78) 50%,
+    rgba(13,26,17,0.97) 100%
+  );
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 24px;
+}
+
+.heroTag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: $gold;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4.5vw, 62px);
+  font-weight: 600;
+  line-height: 0.93;
+  letter-spacing: -1.5px;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  color: $cream;
+}
+
+.h1Em { color: $gold; font-style: italic; }
+
+.heroSub {
+  font-size: 13px;
+  color: rgba(242,236,216,0.48);
+  max-width: 480px;
+  line-height: 1.65;
+  margin: 0;
+  @media (max-width: 480px) { font-size: 12px; }
+}
+
+// ── MOBILE STICKY BAR ─────────────────────────────────────────────────────
+.mobileStickyBar {
+  display: none;
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  background: rgba(18,34,22,0.97);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  backdrop-filter: blur(12px);
+  padding: 10px 16px 14px;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (max-width: 960px) { display: flex; }
+}
+
+.mobileBarInfo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  color: rgba(242,236,216,0.55);
+}
+
+.mobileBarStops { font-weight: 600; color: $cream; }
+.mobileBarDot   { opacity: 0.3; }
+.mobileBarPrice { color: $gold; font-weight: 700; }
+
+.mobileBarBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px;
+  background: $terra;
+  color: $cream;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+
+  &:active { background: $terraH; }
+}
+
+// ── MOBILE TABS ────────────────────────────────────────────────────────────
+.mobileTabs {
+  display: none;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  background: $dark;
+  position: sticky;
+  top: $headerH;
+  z-index: 20;
+
+  @media (max-width: 960px) { display: flex; }
+}
+
+.mobileTab {
+  flex: 1;
+  padding: 12px 8px;
+  background: none;
+  border: none;
+  color: rgba(242,236,216,0.35);
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  &:first-child { border-right: 1px solid rgba(201,168,76,0.08); }
+}
+
+.mobileTabActive {
+  color: $cream;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 2px;
+    background: $gold;
+  }
+}
+
+.mobileTabBadge {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: $terra;
+  flex-shrink: 0;
+}
+
+.mobileHidden {
+  @media (max-width: 960px) { display: none !important; }
+}
+
+// ── MAIN LAYOUT ───────────────────────────────────────────────────────────
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 64px;
+  align-items: start;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    padding: 0 0 140px;
+  }
+}
+
+// ── PICKER PANEL ──────────────────────────────────────────────────────────
+.pickerPanel {
+  padding: 28px 24px 28px 0;
+  border-right: 1px solid rgba(201,168,76,0.08);
+  min-width: 0;
+
+  @media (max-width: 960px) {
+    padding: 16px 16px 20px;
+    border-right: none;
+  }
+}
+
+.pickerSticky {
+  position: sticky;
+  top: $headerH + 8px;
+  z-index: 10;
+  background: $dark;
+  padding-bottom: 10px;
+
+  @media (max-width: 960px) { position: static; }
+}
+
+.searchWrap {
+  display: flex;
+  align-items: center;
+  background: rgba(22,42,28,0.8);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 9px;
+  padding: 0 12px;
+  margin-bottom: 10px;
+  transition: border-color 0.18s;
+
+  &:focus-within { border-color: rgba(201,168,76,0.3); }
+}
+
+.searchIcon {
+  font-size: 13px; margin-right: 8px; opacity: 0.4; flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1; background: none; border: none; outline: none;
+  color: $cream; font-size: 13.5px;
+  font-family: 'DM Sans', sans-serif; padding: 11px 0;
+  &::placeholder { color: rgba(242,236,216,0.22); }
+}
+
+.searchClear {
+  background: none; border: none; color: rgba(242,236,216,0.28);
+  font-size: 11px; cursor: pointer; padding: 4px; flex-shrink: 0;
+  &:hover { color: $cream; }
+}
+
+.filters {
+  display: flex; gap: 5px;
+  overflow-x: auto; padding-bottom: 4px;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.filterBtn {
+  flex-shrink: 0;
+  background: rgba(22,42,28,0.5);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 20px;
+  color: rgba(242,236,216,0.38);
+  font-size: 11px; font-family: 'DM Sans', sans-serif;
+  padding: 4px 9px; cursor: pointer; white-space: nowrap;
+  transition: all 0.15s;
+
+  &:hover { border-color: rgba(201,168,76,0.22); color: rgba(242,236,216,0.6); }
+}
+
+.filterBtnActive { font-weight: 600; }
+
+.destCount {
+  font-size: 10px; color: rgba(242,236,216,0.2);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 10px; padding-top: 4px;
+}
+
+// ── DESTINATION LIST (compact horizontal) ─────────────────────────────────
+.destGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.destCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  background: rgba(22,42,28,0.55);
+  border: 1px solid rgba(201,168,76,0.07);
+  border-radius: 7px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-family: 'DM Sans', sans-serif;
+  width: 100%;
+
+  &:hover:not(.destCardActive) {
+    border-color: rgba(201,168,76,0.18);
+    background: rgba(22,42,28,0.8);
+  }
+}
+
+.destCardActive {
+  background: rgba(18,36,22,0.9);
+}
+
+.destEmoji {
+  font-size: 14px; line-height: 1; flex-shrink: 0;
+  width: 18px; text-align: center;
+}
+
+.destInfo {
+  flex: 1; min-width: 0;
+}
+
+.destName {
+  font-size: 12px; font-weight: 500; color: $cream;
+  line-height: 1.25; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+
+.destRegion {
+  font-size: 9.5px; color: rgba(242,236,216,0.25); line-height: 1.2;
+}
+
+.destMeta {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 1px; flex-shrink: 0;
+}
+
+.destPrice {
+  font-size: 11px; font-weight: 700;
+}
+
+.destDrive {
+  font-size: 9.5px; color: rgba(242,236,216,0.22);
+}
+
+.noResults {
+  text-align: center; color: rgba(242,236,216,0.2);
+  font-size: 13px; padding: 32px 0;
+}
+
+// ── ROUTE PANEL ───────────────────────────────────────────────────────────
+.routePanel {
+  padding: 28px 0 28px 20px;
+  position: sticky;
+  top: $headerH + 8px;
+  max-height: calc(100vh - #{$headerH} - 20px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201,168,76,0.1) transparent;
+
+  @media (max-width: 960px) {
+    position: static;
+    max-height: none;
+    padding: 16px 16px 20px;
+  }
+}
+
+.routePanelInner {
+  background: rgba(22,42,28,0.5);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.routeHeader {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 16px;
+}
+
+.routeHeaderLeft {
+  display: flex; align-items: baseline; gap: 8px;
+}
+
+.routeTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 19px; font-weight: 600; color: $cream;
+}
+
+.routeCount {
+  font-size: 11px; color: rgba(201,168,76,0.5); font-weight: 500;
+}
+
+.clearBtn {
+  font-size: 11px; color: rgba(242,236,216,0.25);
+  background: none; border: 1px solid rgba(242,236,216,0.1);
+  border-radius: 20px; padding: 3px 9px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+
+  &:hover { border-color: rgba(184,87,56,0.4); color: rgba(184,87,56,0.7); }
+}
+
+// ── WAYPOINTS ─────────────────────────────────────────────────────────────
+.waypointList { display: flex; flex-direction: column; margin-bottom: 16px; }
+
+.wp { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; }
+
+.wpDot {
+  width: 8px; height: 8px; border-radius: 50%; border: 2px solid;
+  flex-shrink: 0; margin-top: 4px;
+}
+
+.wpBody { flex: 1; min-width: 0; }
+
+.wpName {
+  font-size: 12px; font-weight: 500; color: $cream;
+  line-height: 1.3; display: flex; align-items: center;
+  gap: 5px; flex-wrap: wrap;
+}
+
+.startBadge {
+  font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(201,168,76,0.6); background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.15); border-radius: 20px;
+  padding: 1px 5px; font-weight: 600;
+}
+
+.wpSub { font-size: 9.5px; color: rgba(242,236,216,0.25); margin-top: 1px; }
+
+.wpActions { display: flex; gap: 2px; flex-shrink: 0; }
+
+.moveBtn {
+  background: none; border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 4px; color: rgba(242,236,216,0.25);
+  font-size: 11px; width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.13s;
+
+  &:hover:not(:disabled) { border-color: rgba(201,168,76,0.3); color: $gold; }
+  &:disabled { opacity: 0.15; cursor: default; }
+}
+
+.removeBtn {
+  background: none; border: 1px solid rgba(184,87,56,0.15);
+  border-radius: 4px; color: rgba(184,87,56,0.4); font-size: 12px;
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; margin-left: 2px; transition: all 0.13s;
+
+  &:hover { border-color: rgba(184,87,56,0.5); color: rgba(184,87,56,0.9); }
+}
+
+// ── SEGMENT ───────────────────────────────────────────────────────────────
+.segment {
+  display: flex; align-items: center; gap: 7px;
+  padding-left: 1px; margin-left: 1px;
+}
+
+.segLine {
+  width: 1px; height: 18px;
+  background: rgba(201,168,76,0.12); flex-shrink: 0;
+}
+
+.segKm { font-size: 10px; color: rgba(201,168,76,0.38); letter-spacing: 0.3px; }
+
+// ── SUMMARY ───────────────────────────────────────────────────────────────
+.summary {
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding-top: 13px; margin-bottom: 16px;
+}
+
+.summaryRow {
+  display: flex; justify-content: space-between;
+  align-items: center; padding: 3px 0;
+}
+
+.summaryLabel {
+  font-size: 10px; color: rgba(242,236,216,0.3);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+.summaryVal {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px; font-weight: 600; color: $cream;
+}
+
+.summaryPrice { font-size: 14px; font-weight: 700; color: $gold; }
+
+.summaryNote {
+  font-size: 10px; color: rgba(242,236,216,0.17);
+  margin: 5px 0 9px; font-style: italic;
+}
+
+.included {
+  display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px;
+
+  span {
+    font-size: 10px; color: rgba(242,236,216,0.35);
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 20px; padding: 2px 7px;
+  }
+}
+
+// ── BOOK CTA ──────────────────────────────────────────────────────────────
+.bookBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; padding: 12px 14px; background: $terra; color: $cream;
+  font-size: 13px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+  border-radius: 8px; text-decoration: none; box-sizing: border-box;
+  transition: background 0.18s, transform 0.13s;
+
+  &:hover { background: $terraH; transform: translateY(-2px); }
+}
+
+.bookNote {
+  font-size: 10px; color: rgba(242,236,216,0.18);
+  text-align: center; margin: 6px 0 0; font-style: italic;
+}
+
+// ── HINTS ─────────────────────────────────────────────────────────────────
+.routeHint {
+  font-size: 12px; color: rgba(242,236,216,0.2);
+  text-align: center; padding: 20px 0 6px; line-height: 1.6;
+}

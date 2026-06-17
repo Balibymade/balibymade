@@ -1,0 +1,1128 @@
+$dark:   #0d1a11;
+$forest: #162a1c;
+$gold:   #c9a84c;
+$cream:  #f2ecd8;
+$terra:  #b85738;
+$terraH: #a04830;
+
+.page {
+  background: $dark;
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+  color: $cream;
+}
+
+// ── HERO ──────────────────────────────────────────────
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+  padding-top: 116px;
+  padding-bottom: 72px;
+  box-sizing: border-box;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 35%;
+  transform: scale(1.03);
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(13,26,17,0.9) 0%,
+    rgba(13,26,17,0.72) 45%,
+    rgba(13,26,17,0.3) 80%,
+    rgba(13,26,17,0.15) 100%
+  );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  align-items: center;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.heroLeft { align-self: start; margin-top: -16px; }
+
+.heroTag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: $gold;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(38px, 7.5vw, 100px);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -2px;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  color: $cream;
+
+  @media (max-width: 480px) { letter-spacing: -1px; }
+}
+
+.h1Em { color: $gold; font-style: italic; }
+
+.heroSub {
+  font-size: 15px;
+  color: rgba(242,236,216,0.65);
+  max-width: 460px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.heroRight { @media (max-width: 900px) { display: none; } }
+
+.heroCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  max-height: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+
+.heroCardImg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+  .heroCard:hover & { transform: scale(1.04); }
+}
+
+.heroCardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(13,26,17,0.1) 0%, rgba(13,26,17,0.8) 80%, rgba(13,26,17,0.95) 100%);
+}
+
+.heroCardBadge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(13,26,17,0.7);
+  border: 1px solid rgba(201,168,76,0.3);
+  backdrop-filter: blur(8px);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: $gold;
+  font-weight: 500;
+}
+
+.heroCardRoutes {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heroCardRoute { display: flex; align-items: center; gap: 10px; }
+
+.heroCardN {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: $gold;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.heroCardRouteName {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: $cream;
+  letter-spacing: -0.3px;
+}
+
+.heroCardDivider { height: 1px; background: rgba(201,168,76,0.2); }
+
+// ── SHARED ────────────────────────────────────────────
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.overline {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: $gold;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.divider {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent);
+}
+
+// ── SERVICES OVERVIEW ─────────────────────────────────
+.overview {
+  padding: 72px 0 64px;
+  background: $forest;
+}
+
+.overviewTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 600;
+  color: $cream;
+  margin: 0 0 10px;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+}
+
+.overviewSub {
+  font-size: 14px;
+  color: rgba(242,236,216,0.45);
+  margin: 0 0 40px;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 480px)  { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+
+.serviceCard {
+  position: relative;
+  aspect-ratio: 3/4;
+  max-height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-decoration: none;
+  border: 1px solid rgba(201,168,76,0.06);
+  transition: border-color 0.2s, transform 0.2s;
+
+  &:hover {
+    border-color: rgba(201,168,76,0.22);
+    transform: translateY(-4px);
+  }
+}
+
+.serviceCardBg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+  .serviceCard:hover & { transform: scale(1.05); }
+}
+
+.serviceCardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(13,26,17,0.05) 0%, rgba(13,26,17,0.85) 70%, rgba(13,26,17,0.97) 100%);
+}
+
+.serviceCardBadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(13,26,17,0.65);
+  border: 1px solid rgba(201,168,76,0.28);
+  backdrop-filter: blur(6px);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: $gold;
+  font-weight: 500;
+}
+
+.serviceCardBody {
+  position: relative;
+  z-index: 2;
+  padding: 14px 14px 16px;
+}
+
+.serviceCardTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: $cream;
+  margin: 0 0 5px;
+  line-height: 1.1;
+}
+
+.serviceCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(242,236,216,0.45);
+  flex-wrap: wrap;
+}
+
+.serviceCardPrice { color: $gold; font-weight: 600; }
+.serviceCardDot   { opacity: 0.3; }
+
+// ── ROUTE SECTIONS ────────────────────────────────────
+.routeSection { padding: 72px 0 56px; }
+
+.routeHeader {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.routeHeaderText { flex: 1; }
+
+.routeN {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 60px;
+  font-weight: 700;
+  color: rgba(201,168,76,0.12);
+  line-height: 1;
+  flex-shrink: 0;
+  padding-top: 4px;
+
+  @media (max-width: 600px) { font-size: 40px; }
+}
+
+.routeTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4vw, 50px);
+  font-weight: 600;
+  color: $cream;
+  margin: 0 0 12px;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.routeInfoRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.priceTag {
+  font-size: 13px;
+  font-weight: 700;
+  color: $gold;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.infoDot  { color: rgba(242,236,216,0.18); font-size: 12px; }
+.infoItem { font-size: 12px; color: rgba(242,236,216,0.4); }
+
+// ── INCLUDED / NOT INCLUDED ───────────────────────────
+.includeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0 36px;
+
+  @media (max-width: 600px) { grid-template-columns: 1fr; }
+}
+
+.includeBox {
+  background: rgba(22,42,28,0.5);
+  border: 1px solid rgba(201,168,76,0.08);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.notIncludedBox {
+  background: rgba(30,15,10,0.4);
+  border-color: rgba(184,87,56,0.1);
+}
+
+.includeTitle {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(201,168,76,0.7);
+  margin-bottom: 12px;
+}
+
+.notIncludedTitle { color: rgba(184,87,56,0.7); }
+
+.includeList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li {
+    font-size: 13px;
+    color: rgba(242,236,216,0.6);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+
+    &::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: rgba(201,168,76,0.35);
+      font-size: 11px;
+    }
+  }
+}
+
+.notIncludedList li {
+  color: rgba(242,236,216,0.4);
+
+  &::before { color: rgba(184,87,56,0.35); }
+}
+
+// ── TIMELINE ──────────────────────────────────────────
+.timeline {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 8px;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: 56px 28px 1fr;
+  gap: 0 14px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 44px 20px 1fr;
+    gap: 0 10px;
+  }
+}
+
+.timelineLeft {
+  display: contents;
+}
+
+.timelineClock {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: $gold;
+  letter-spacing: 0.5px;
+  padding-top: 2px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.timelineConnector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timelineDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.5);
+  border: 2px solid rgba(201,168,76,0.25);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.timelineLine {
+  flex: 1;
+  width: 1px;
+  background: rgba(201,168,76,0.1);
+  min-height: 20px;
+  margin: 4px 0;
+}
+
+.timelineContent {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 28px;
+  align-items: flex-start;
+
+  @media (max-width: 640px) { flex-direction: column; }
+}
+
+.timelineImg {
+  width: 150px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  filter: saturate(0.85);
+
+  @media (max-width: 640px) {
+    width: 100%;
+    height: 160px;
+  }
+}
+
+.timelineText { flex: 1; }
+
+.timelineStopN {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(201,168,76,0.35);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+
+.timelinePlace {
+  font-size: 15px;
+  font-weight: 600;
+  color: $cream;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.timelineDesc {
+  font-size: 13px;
+  color: rgba(242,236,216,0.44);
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
+.routeFooter { margin-top: 32px; }
+
+.bookBtn {
+  display: inline-block;
+  padding: 12px 26px;
+  background: $terra;
+  color: $cream;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+
+  &:hover { background: $terraH; transform: translateY(-2px); }
+}
+
+// ── AIRPORT TRANSFER ──────────────────────────────────
+.transferSection {
+  padding: 72px 0 56px;
+  background: $forest;
+}
+
+.transferIcon {
+  font-size: 48px;
+  line-height: 1;
+  color: rgba(201,168,76,0.18);
+  flex-shrink: 0;
+  padding-top: 4px;
+
+  @media (max-width: 600px) { font-size: 32px; }
+}
+
+.transferDesc {
+  font-size: 14px;
+  color: rgba(242,236,216,0.5);
+  line-height: 1.7;
+  margin: 12px 0 0;
+  max-width: 680px;
+}
+
+.routesTableWrap { margin: 32px 0 0; }
+
+.routesTableLabel {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.5);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.routesTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 640px;
+}
+
+.routesRow {
+  display: grid;
+  grid-template-columns: 1fr 100px 80px;
+  align-items: center;
+  padding: 13px 18px;
+  gap: 12px;
+  border-bottom: 1px solid rgba(201,168,76,0.07);
+  transition: background 0.15s;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: rgba(201,168,76,0.04); }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr 70px 60px;
+    padding: 12px 14px;
+    gap: 8px;
+  }
+}
+
+.routesTo {
+  font-size: 13px;
+  color: rgba(242,236,216,0.7);
+}
+
+.routesDuration {
+  font-size: 12px;
+  color: rgba(242,236,216,0.35);
+  text-align: center;
+}
+
+.routesPrice {
+  font-size: 13px;
+  font-weight: 700;
+  color: $gold;
+  text-align: right;
+}
+
+.transferNote {
+  font-size: 11px;
+  color: rgba(242,236,216,0.25);
+  margin: 12px 0 0;
+  font-style: italic;
+}
+
+// ── CUSTOM ────────────────────────────────────────────
+.custom {
+  padding: 72px 0 96px;
+  background: $dark;
+}
+
+.customInner {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.customTag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: $gold;
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding: 5px 14px;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 20px;
+}
+
+.customTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 600;
+  color: $cream;
+  margin: 0 0 16px;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+}
+
+.customDesc {
+  font-size: 15px;
+  color: rgba(242,236,216,0.5);
+  line-height: 1.7;
+  margin: 0 0 30px;
+}
+
+// ── AIRPORT TRANSFER ──────────────────────────────────────────────────────
+.airportSection {
+  padding: 64px 0;
+  background: $forest;
+}
+
+.airportGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+
+  @media (max-width: 760px) { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.airportLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.airportIcon {
+  font-size: 40px;
+  line-height: 1;
+  filter: grayscale(0.2);
+}
+
+.airportTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 600;
+  color: $cream;
+  margin: 4px 0 12px;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+}
+
+.airportDesc {
+  font-size: 13.5px;
+  color: rgba(242,236,216,0.5);
+  line-height: 1.7;
+  margin: 0 0 18px;
+}
+
+.airportIncluded {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.airportChip {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.18);
+  color: rgba(242,236,216,0.55);
+}
+
+.airportBtn {
+  display: inline-block;
+  padding: 11px 24px;
+  background: $terra;
+  color: $cream;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.18s, transform 0.14s;
+
+  &:hover { background: #a04830; transform: translateY(-2px); }
+}
+
+.airportRight { }
+
+.airportTableLabel {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.5);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.airportTable {
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.airportRow {
+  display: grid;
+  grid-template-columns: 1fr 90px 56px;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 10px;
+  border-bottom: 1px solid rgba(201,168,76,0.07);
+  transition: background 0.13s;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: rgba(201,168,76,0.04); }
+
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr 70px 50px;
+    padding: 11px 12px;
+  }
+}
+
+.airportTo {
+  font-size: 13px;
+  color: rgba(242,236,216,0.7);
+}
+
+.airportDur {
+  font-size: 11.5px;
+  color: rgba(242,236,216,0.3);
+  text-align: center;
+}
+
+.airportPrice {
+  font-size: 14px;
+  font-weight: 700;
+  color: $gold;
+  text-align: right;
+}
+
+.airportNote {
+  font-size: 11px;
+  color: rgba(242,236,216,0.22);
+  margin: 10px 0 0;
+  font-style: italic;
+}
+
+// ── CONTACT MADE ──────────────────────────────────────────────────────────
+.contactSection {
+  padding: 56px 0;
+  background: $dark;
+}
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  background: rgba(22,42,28,0.5);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 16px;
+  padding: 32px 36px;
+
+  @media (max-width: 680px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 20px;
+  }
+}
+
+.contactCardLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contactEmoji { font-size: 32px; line-height: 1; margin-bottom: 6px; }
+
+.contactTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 600;
+  color: $cream;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.contactSub {
+  font-size: 13.5px;
+  color: rgba(242,236,216,0.45);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 400px;
+}
+
+.contactCardRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.contactBtn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: $terra;
+  color: $cream;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.18s, transform 0.14s;
+
+  &:hover { background: #a04830; transform: translateY(-2px); }
+}
+
+.contactNote {
+  font-size: 11px;
+  color: rgba(242,236,216,0.25);
+  text-align: center;
+  margin: 0;
+  font-style: italic;
+}
+
+.customBtn {
+  display: inline-block;
+  padding: 12px 28px;
+  border: 1px solid rgba(201,168,76,0.32);
+  color: $cream;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: $gold;
+    background: rgba(201,168,76,0.07);
+    transform: translateY(-2px);
+  }
+}
+
+// ── ROUTES SECTION (10 routes) ─────────────────────────
+.routesSection {
+  padding: 72px 0 64px;
+  background: $dark;
+}
+
+.sectionTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 600;
+  color: $cream;
+  margin: 0 0 10px;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+}
+
+.sectionSub {
+  font-size: 14px;
+  color: rgba(242,236,216,0.4);
+  margin: 0 0 48px;
+  max-width: 580px;
+  line-height: 1.7;
+}
+
+.routesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  @media (max-width: 720px) { grid-template-columns: 1fr; }
+}
+
+.routeCard {
+  border-radius: 14px;
+  overflow: hidden;
+  background: $forest;
+  border: 1px solid rgba(201,168,76,0.08);
+  transition: border-color 0.2s, transform 0.2s;
+
+  &:hover {
+    border-color: rgba(201,168,76,0.22);
+    transform: translateY(-3px);
+  }
+}
+
+.routeCardImgWrap {
+  position: relative;
+  height: 150px;
+  overflow: hidden;
+}
+
+.routeCardBg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+  .routeCard:hover & { transform: scale(1.04); }
+}
+
+.routeCardImgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(13,26,17,0.1) 0%, rgba(13,26,17,0.5) 100%);
+}
+
+.routeCardContent {
+  padding: 18px 20px 20px;
+}
+
+.routeCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.routeCardEmoji { font-size: 20px; line-height: 1; }
+
+.routeCardNum {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(201,168,76,0.28);
+  letter-spacing: 2px;
+}
+
+.routeCardTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: $cream;
+  margin: 0 0 4px;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+}
+
+.routeCardTagline {
+  font-size: 11.5px;
+  color: rgba(201,168,76,0.65);
+  font-style: italic;
+  margin: 0 0 8px;
+}
+
+.routeCardPath {
+  font-size: 10.5px;
+  color: rgba(242,236,216,0.28);
+  margin: 0 0 12px;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+.routeHighlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.routeHighlight {
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: rgba(201,168,76,0.07);
+  border: 1px solid rgba(201,168,76,0.14);
+  color: rgba(242,236,216,0.5);
+}
+
+.routeCardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(201,168,76,0.07);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.routeCardFooterLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.routeDuration {
+  font-size: 11px;
+  color: rgba(242,236,216,0.35);
+}
+
+.routeLevel {
+  font-size: 10px;
+  color: rgba(201,168,76,0.5);
+}
+
+.routeCardPrice {
+  font-size: 13px;
+  font-weight: 700;
+  color: $gold;
+}
+
+.routeBookBtn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 14px;
+  background: rgba(184,87,56,0.9);
+  color: $cream;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  border-radius: 6px;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.18s, transform 0.14s;
+
+  &:hover {
+    background: #a04830;
+    transform: translateY(-1px);
+  }
+}
+
+// ── INCLUDED SECTION ──────────────────────────────────
+.includedSection {
+  padding: 56px 0 64px;
+  background: $forest;
+}
+
+.includedGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-top: 28px;
+
+  @media (max-width: 800px) { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+.includedItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(13,26,17,0.45);
+  border: 1px solid rgba(201,168,76,0.07);
+  border-radius: 10px;
+}
+
+.includedIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.includedText {
+  font-size: 13px;
+  color: rgba(242,236,216,0.5);
+  line-height: 1.4;
+}

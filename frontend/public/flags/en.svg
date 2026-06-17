@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30">
+  <rect width="60" height="30" fill="#012169"/>
+  <!-- White saltire -->
+  <path d="M0,0 L60,30 M60,0 L0,30" stroke="white" stroke-width="6"/>
+  <!-- Red saltire with fimbriation -->
+  <path d="M0,0 L60,30" stroke="#C8102E" stroke-width="3.6" clip-path="url(#top-left)"/>
+  <path d="M60,0 L0,30" stroke="#C8102E" stroke-width="3.6" clip-path="url(#top-right)"/>
+  <clipPath id="top-left"><polygon points="0,0 30,0 60,30 60,30 30,30 0,0"/></clipPath>
+  <clipPath id="top-right"><polygon points="60,0 60,30 30,30 0,0 0,0 30,0"/></clipPath>
+  <!-- White cross -->
+  <rect x="25" y="0" width="10" height="30" fill="white"/>
+  <rect x="0" y="10" width="60" height="10" fill="white"/>
+  <!-- Red cross -->
+  <rect x="27" y="0" width="6" height="30" fill="#C8102E"/>
+  <rect x="0" y="12" width="60" height="6" fill="#C8102E"/>
+</svg>
