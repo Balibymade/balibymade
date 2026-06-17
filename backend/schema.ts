@@ -85,7 +85,14 @@ const TRANSLATION_SPECS = [
       heroTag: '', heroH1a: '', heroH1b: '', heroSub: '', heroCta1: '', heroCta2: '', heroScroll: '',
       heroCardTag: '', heroCardName: '', heroCardSub: '', heroCardStat: '',
       whyOverline: '', whyTitle: '', whyItems: [],
+      faqTitle: '', faqItems: [],
     },
+  },
+  {
+    translationModel: 'sEOPageTranslation',
+    parentModel:      'sEOPage',
+    parentKey:        'seoPageId',
+    emptyData:        { title: '', description: '' },
   },
   {
     translationModel: 'experiencesPageTranslation',
@@ -556,6 +563,9 @@ export const lists: Lists = {
       whyOverline: text(),
       whyTitle:    text(),
       whyItems:    json({ defaultValue: [], ui: { description: 'Array [{ icon, title, desc }] — sección "Why Made"' } }),
+
+      faqTitle: text({ ui: { description: 'Título de la sección de preguntas frecuentes (SEO/GEO)' } }),
+      faqItems: json({ defaultValue: [], ui: { description: 'Array [{ question, answer }] — preguntas frecuentes, visibles en la home y usadas como FAQPage schema.org para SEO y motores de respuesta IA (GEO)' } }),
     },
   }),
 
@@ -723,6 +733,37 @@ export const lists: Lists = {
 
       noteTitle: text(),
       noteItems: json({ defaultValue: [], ui: { description: 'Array de strings: qué incluir en el mensaje' } }),
+    },
+  }),
+
+  // ── SEO PAGE (title/description por página, para metadata + sitemap) ─────────
+  SEOPage: list({
+    access: publicReadAdminWrite,
+    graphql: { plural: 'SEOPageItems' },
+    ui: {
+      label: 'SEO por página',
+      labelField: 'slug',
+      listView: { initialColumns: ['slug', 'order'] },
+    },
+    fields: {
+      slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'home, experiences, route-builder, about, contact' } }),
+      order:        integer({ defaultValue: 0 }),
+      translations: relationship({ ref: 'SEOPageTranslation.seoPage', many: true }),
+    },
+    hooks: makeTranslationHook('sEOPageTranslation', 'seoPageId', { title: '', description: '' }),
+  }),
+
+  SEOPageTranslation: list({
+    access: publicReadAdminWrite,
+    ui: {
+      label: 'SEO por página · Traducciones',
+      listView: { initialColumns: ['seoPage', 'locale', 'title'] },
+    },
+    fields: {
+      seoPage:     relationship({ ref: 'SEOPage.translations' }),
+      locale:      text({ validation: { isRequired: true } }),
+      title:       text({ validation: { isRequired: true }, ui: { description: 'Title tag — máx. ~60 caracteres' } }),
+      description: text({ ui: { displayMode: 'textarea', description: 'Meta description — máx. ~155 caracteres' } }),
     },
   }),
 

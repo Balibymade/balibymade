@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import { getRouteBuilderPage, getDestinations, getDestinationCategories, getSiteSettings } from '../../../lib/queries'
+import { buildMetadata } from '../../../lib/seoMetadata'
 import RouteBuilderClient from './RouteBuilderClient'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  return buildMetadata('route-builder', locale, '/route-builder')
+}
 
 export default async function RouteBuilderPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params

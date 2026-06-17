@@ -23,8 +23,33 @@ export default async function LocaleLayout({
 
   if (!chrome) notFound()
 
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': ['LocalBusiness', 'TouristInformationCenter'],
+    name: settings?.businessName ?? 'Bali By Made',
+    description: chrome.ctaSub,
+    url: 'https://balibymade.com',
+    image: 'https://balibymade.com/demos/balibymade/hero-tegallalang.jpg',
+    areaServed: { '@type': 'Place', name: 'Bali, Indonesia' },
+    address: { '@type': 'PostalAddress', addressLocality: 'Ubud', addressRegion: 'Bali', addressCountry: 'ID' },
+    ...(settings?.whatsappNumber ? { telephone: `+${settings.whatsappNumber}` } : {}),
+    sameAs: settings?.instagramUrl ? [settings.instagramUrl] : [],
+  }
+
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Made',
+    jobTitle: 'Local Bali Guide',
+    worksFor: { '@type': 'LocalBusiness', name: settings?.businessName ?? 'Bali By Made' },
+    knowsAbout: ['Bali tourism', 'Private driving tours', 'Bali temples', 'Bali volcanoes'],
+    knowsLanguage: ['en', 'id'],
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
       <Header
         locale={locale}
         transparent

@@ -110,6 +110,17 @@ tipo `Destination` de GraphQL en vez de los datos hardcodeados.
 /[locale]/contact          — Contacto (formulario visual, WhatsApp real)
 ```
 
+## SEO y GEO
+
+Ver blueprint sección 29. Implementado:
+- `SEOPage` (+Translation) en Keystone — title/description por página y locale
+- `generateMetadata` en las 5 páginas vía `lib/seoMetadata.ts` (canonical + hreflang 22 locales + og/twitter)
+- `app/sitemap.ts` (5 páginas × locales habilitados, con `alternates.languages`) y `app/robots.ts`
+- Schema.org JSON-LD en `app/[locale]/layout.tsx`: `LocalBusiness`/`TouristInformationCenter` + `Person` (Made)
+- GEO: sección FAQ visible en Home (`HomePageTranslation.faqItems`, editable en Keystone) + `FAQPage` schema.org
+- GEO: `frontend/public/llms.txt` (estático, actualizar a mano si cambian precios/servicios)
+- Seed de SEO/FAQ: `backend/seed-seo.ts` (contenido nuevo en en/es/id/ru, fallback inglés en el resto — pendiente revisar/traducir el resto de locales)
+
 ## Pendiente antes de producción
 
 - [ ] Subir imágenes reales a cada `Route`/`RouteItinerary`/`HomePage.heroImage`/`AboutPage.bioImage`

@@ -1,6 +1,13 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { getAboutPage, getSiteChrome, getSiteSettings } from '../../../lib/queries'
+import { buildMetadata } from '../../../lib/seoMetadata'
 import s from './About.module.scss'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  return buildMetadata('about', locale, '/about')
+}
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params

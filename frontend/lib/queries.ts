@@ -53,6 +53,7 @@ export type HomePageT = {
   heroTag: string; heroH1a: string; heroH1b: string; heroSub: string; heroCta1: string; heroCta2: string; heroScroll: string
   heroCardTag: string; heroCardName: string; heroCardSub: string; heroCardStat: string
   whyOverline: string; whyTitle: string; whyItems: { icon: string; title: string; desc: string }[]
+  faqTitle: string; faqItems: { question: string; answer: string }[]
 }
 
 export async function getHomePage(locale: string): Promise<HomePageT | null> {
@@ -62,11 +63,27 @@ export async function getHomePage(locale: string): Promise<HomePageT | null> {
         heroTag heroH1a heroH1b heroSub heroCta1 heroCta2 heroScroll
         heroCardTag heroCardName heroCardSub heroCardStat
         whyOverline whyTitle whyItems
+        faqTitle faqItems
       }
     }`,
     { locale },
   )
   return data?.homePageTranslations?.[0] ?? null
+}
+
+export type SEOPageT = { title: string; description: string }
+
+export async function getSEOPage(slug: string, locale: string): Promise<SEOPageT | null> {
+  const data = await fetchGraphQL<{ sEOPageItems: { translations: SEOPageT[] }[] }>(
+    `query($slug: String!, $locale: String!) {
+      sEOPageItems(where: { slug: { equals: $slug } }, take: 1) {
+        translations(where: { locale: { equals: $locale } }) { title description }
+      }
+    }`,
+    { slug, locale },
+    300,
+  )
+  return data?.sEOPageItems?.[0]?.translations?.[0] ?? null
 }
 
 export type ExperiencesPageT = {

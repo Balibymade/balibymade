@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import { getExperiencesPage, getSiteChrome, getRoutes, getAirportRoutes, getSiteSettings } from '../../../lib/queries'
+import { buildMetadata } from '../../../lib/seoMetadata'
 import s from './Experiences.module.scss'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  return buildMetadata('experiences', locale, '/experiences')
+}
 
 const ROUTE_IMAGES = [
   '/demos/balibymade/hero-batur.jpg',

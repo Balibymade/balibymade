@@ -1,6 +1,13 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { getHomePage, getSiteChrome, getRoutes, getSiteSettings } from '../../lib/queries'
+import { buildMetadata } from '../../lib/seoMetadata'
 import s from './Home.module.scss'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  return buildMetadata('home', locale, '')
+}
 
 const TEASER_IMAGES = [
   '/demos/balibymade/hero-tegallalang.jpg',
@@ -139,6 +146,37 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <p className={s.ctaNote}>✦ {chrome.ctaNote}</p>
         </div>
       </section>
+
+      {/* FAQ — SEO + GEO (FAQPage schema.org, contenido citable por motores de respuesta IA) */}
+      {home.faqItems.length > 0 && (
+        <section className={s.why} aria-labelledby="faq-title">
+          <div className={s.container}>
+            <h2 id="faq-title" className={s.sectionTitleLight}>{home.faqTitle}</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '2rem' }}>
+              {home.faqItems.map((item, i) => (
+                <div key={i}>
+                  <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '.4rem' }}>{item.question}</h3>
+                  <p style={{ color: 'rgba(255,255,255,.75)', lineHeight: 1.6 }}>{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'FAQPage',
+                mainEntity: home.faqItems.map(item => ({
+                  '@type': 'Question',
+                  name: item.question,
+                  acceptedAnswer: { '@type': 'Answer', text: item.answer },
+                })),
+              }),
+            }}
+          />
+        </section>
+      )}
     </div>
   )
 }

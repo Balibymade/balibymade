@@ -1,6 +1,13 @@
+import type { Metadata } from 'next'
 import { getContactPage, getSiteSettings } from '../../../lib/queries'
+import { buildMetadata } from '../../../lib/seoMetadata'
 import ContactForm from './ContactForm'
 import s from './Contact.module.scss'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  return buildMetadata('contact', locale, '/contact')
+}
 
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
