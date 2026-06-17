@@ -4,11 +4,12 @@
 
 - **Repositorio**: https://github.com/pablopedrosa7/balibymade.com (cuenta GitHub: `pablopedrosa7`)
 - **Email para todos los registros** (Cloudflare, Vercel, Render, Supabase, registrador dominio):
-  `pablopm77+balibymade@gmail.com` (alias "+" del Gmail personal de Pablo — no se pudo crear un
-  Gmail dedicado nuevo por bloqueo de verificación SMS desde Japón). Todo llega a la bandeja
-  habitual de `pablopm77@gmail.com`, filtrable por ese alias.
+  `pablo+balibymade@pablopedrosa.com` (alias "+" sobre el buzón de Google Workspace de
+  `pablopedrosa.com` — no se pudo crear un Gmail dedicado nuevo por bloqueo de verificación SMS
+  desde Japón). Todo llega a la bandeja habitual de `pablo@pablopedrosa.com`, filtrable por ese
+  alias.
 - Email público del negocio: `hola@balibymade.com` (pendiente de configurar vía Cloudflare Email
-  Routing → reenvío a `pablopm77@gmail.com`)
+  Routing → reenvío a `pablo@pablopedrosa.com`)
 
 ## Descripción del proyecto
 
