@@ -15,7 +15,7 @@ import { type Lists } from '.keystone/types'
 
 const publishedField = () => checkbox({
   defaultValue: false,
-  ui: { description: 'Marca esta casilla para que el contenido sea visible en la web pública.' },
+  ui: { description: 'Check this box to make the content visible on the public website.' },
 })
 
 // ── Helpers para hooks de traducción automática ────────────────────────────────
@@ -217,16 +217,16 @@ export const lists: Lists = {
     access: publicReadAdminWrite,
     graphql: { plural: 'LocaleSettingItems' },
     ui: {
-      label: 'Idiomas',
+      label: 'Languages',
       labelField: 'label',
       listView: { initialColumns: ['label', 'code', 'order', 'enabled'] },
     },
     fields: {
-      code:    text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Código ISO del idioma (es, en, id, ru, ...)' } }),
-      label:   text({ validation: { isRequired: true }, ui: { description: 'Nombre visible (Español, English, Bahasa Indonesia...)' } }),
-      flag:    text({ ui: { description: 'Ruta del icono de bandera, ej. /flags/en.svg' } }),
-      order:   integer({ defaultValue: 0, ui: { description: 'Orden en el selector de idioma' } }),
-      enabled: checkbox({ defaultValue: true, ui: { description: 'Desmarca para ocultar este idioma en la web.' } }),
+      code:    text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'ISO language code (es, en, id, ru, ...)' } }),
+      label:   text({ validation: { isRequired: true }, ui: { description: 'Display name (Español, English, Bahasa Indonesia...)' } }),
+      flag:    text({ ui: { description: 'Flag icon path, e.g. /flags/en.svg' } }),
+      order:   integer({ defaultValue: 0, ui: { description: 'Order in the language selector' } }),
+      enabled: checkbox({ defaultValue: true, ui: { description: 'Uncheck to hide this language on the website.' } }),
     },
     hooks: {
       afterOperation: async ({ operation, item, originalItem, context }: any) => {
@@ -258,15 +258,15 @@ export const lists: Lists = {
     access: publicReadAdminWrite,
     graphql: { plural: 'SiteSettingsItems' },
     ui: {
-      label: 'Ajustes del sitio',
+      label: 'Site settings',
       labelField: 'businessName',
-      description: 'Debe existir una única fila. Datos de contacto y marca usados en toda la web.',
+      description: 'There should only be one row. Contact and brand data used across the whole site.',
     },
     fields: {
       businessName:   text({ defaultValue: 'Bali By Made', validation: { isRequired: true } }),
-      logoSub:         text({ defaultValue: 'BALI BY', ui: { description: 'Línea superior del logo' } }),
-      logoMain:        text({ defaultValue: 'MADE', ui: { description: 'Línea principal del logo' } }),
-      whatsappNumber:  text({ ui: { description: 'Número completo con prefijo de país, ej. 6281234567890 (sin +, usado en wa.me)' } }),
+      logoSub:         text({ defaultValue: 'BALI BY', ui: { description: 'Top line of the logo' } }),
+      logoMain:        text({ defaultValue: 'MADE', ui: { description: 'Main line of the logo' } }),
+      whatsappNumber:  text({ ui: { description: 'Full number with country code, e.g. 6281234567890 (no +, used for wa.me)' } }),
       instagramUrl:    text({ defaultValue: 'https://www.instagram.com/balibymade' }),
       instagramHandle: text({ defaultValue: '@balibymade' }),
       contactEmail:    text(),
@@ -277,14 +277,14 @@ export const lists: Lists = {
   DestinationCategory: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Categorías de destino',
+      label: 'Destination categories',
       labelField: 'slug',
       listView: { initialColumns: ['slug', 'emoji', 'color', 'order'] },
     },
     fields: {
       slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'temple, waterfall, volcano, rice-terrace, beach, village, viewpoint, coast, market, lake, cultural, forest, airport...' } }),
       emoji:        text({ validation: { isRequired: true } }),
-      color:        text({ validation: { isRequired: true }, ui: { description: 'Color hex, ej. #c9a84c' } }),
+      color:        text({ validation: { isRequired: true }, ui: { description: 'Hex color, e.g. #c9a84c' } }),
       order:        integer({ defaultValue: 0 }),
       translations: relationship({ ref: 'DestinationCategoryTranslation.category', many: true }),
     },
@@ -294,7 +294,7 @@ export const lists: Lists = {
   DestinationCategoryTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Categorías de destino · Traducciones',
+      label: 'Destination categories · Translations',
       listView: { initialColumns: ['category', 'locale', 'label'] },
     },
     fields: {
@@ -308,19 +308,19 @@ export const lists: Lists = {
   Destination: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Destinos',
+      label: 'Destinations',
       labelField: 'slug',
       listView: { initialColumns: ['slug', 'category', 'region', 'priceFromUbud', 'order', 'published'] },
     },
     fields: {
       published:        publishedField(),
-      slug:              text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Identificador único, ej. ubud, monkey-forest, tegallalang' } }),
+      slug:              text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Unique identifier, e.g. ubud, monkey-forest, tegallalang' } }),
       category:          relationship({ ref: 'DestinationCategory' }),
       lat:               float({ validation: { isRequired: true } }),
       lng:               float({ validation: { isRequired: true } }),
-      region:             text({ validation: { isRequired: true }, ui: { description: 'Región o zona, ej. Ubud, Sidemen, Amed' } }),
-      priceFromUbud:      integer({ validation: { isRequired: true }, ui: { description: 'Precio estimado en USD, coche privado desde Ubud' } }),
-      driveMinFromUbud:   integer({ validation: { isRequired: true }, ui: { description: 'Minutos de conducción desde Ubud' } }),
+      region:             text({ validation: { isRequired: true }, ui: { description: 'Region or area, e.g. Ubud, Sidemen, Amed' } }),
+      priceFromUbud:      integer({ validation: { isRequired: true }, ui: { description: 'Estimated price in USD, private car from Ubud' } }),
+      driveMinFromUbud:   integer({ validation: { isRequired: true }, ui: { description: 'Drive minutes from Ubud' } }),
       order:              integer({ defaultValue: 0 }),
       translations:       relationship({ ref: 'DestinationTranslation.destination', many: true }),
     },
@@ -330,7 +330,7 @@ export const lists: Lists = {
   DestinationTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Destinos · Traducciones',
+      label: 'Destinations · Translations',
       listView: { initialColumns: ['destination', 'locale', 'name'] },
     },
     fields: {
@@ -344,17 +344,17 @@ export const lists: Lists = {
   Route: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Rutas',
+      label: 'Routes',
       labelField: 'slug',
       listView: { initialColumns: ['slug', 'emoji', 'priceUsd', 'stars', 'order', 'published'] },
     },
     fields: {
       published:    publishedField(),
-      slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Identificador único, ej. kintamani-volcano-road' } }),
+      slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Unique identifier, e.g. kintamani-volcano-road' } }),
       emoji:        text({ validation: { isRequired: true } }),
       image:        image({ storage: 'balibymade_media' }),
-      priceUsd:     integer({ validation: { isRequired: true }, ui: { description: 'Precio "desde", en USD' } }),
-      stars:        integer({ defaultValue: 5, ui: { description: 'Valoración 1-5' } }),
+      priceUsd:     integer({ validation: { isRequired: true }, ui: { description: '"From" price, in USD' } }),
+      stars:        integer({ defaultValue: 5, ui: { description: 'Rating 1-5' } }),
       order:        integer({ defaultValue: 0 }),
       itinerary:    relationship({ ref: 'RouteItinerary.route', many: true }),
       translations: relationship({ ref: 'RouteTranslation.route', many: true }),
@@ -367,19 +367,19 @@ export const lists: Lists = {
   RouteTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Rutas · Traducciones',
+      label: 'Routes · Translations',
       listView: { initialColumns: ['route', 'locale', 'title'] },
     },
     fields: {
       route:      relationship({ ref: 'Route.translations' }),
       locale:     text({ validation: { isRequired: true } }),
-      title:      text({ validation: { isRequired: true }, ui: { description: 'Ej. Ubud → Kintamani Volcano Road' } }),
-      heroShort:  text({ ui: { description: 'Versión corta del título, usada en tarjetas pequeñas' } }),
+      title:      text({ validation: { isRequired: true }, ui: { description: 'E.g. Ubud → Kintamani Volcano Road' } }),
+      heroShort:  text({ ui: { description: 'Short version of the title, used on small cards' } }),
       tagline:    text(),
-      path:       text({ ui: { description: 'Paradas separadas por · , ej. Ubud · Tirta Empul · Kintamani' } }),
-      duration:   text({ ui: { description: 'Ej. Full day, Half day, 2–4 days' } }),
-      level:      text({ ui: { description: 'Ej. Scenery, Adventure, Culture, Road trip, Epic' } }),
-      highlights: json({ defaultValue: [], ui: { description: 'Array de strings con los puntos destacados de la ruta' } }),
+      path:       text({ ui: { description: 'Stops separated by · , e.g. Ubud · Tirta Empul · Kintamani' } }),
+      duration:   text({ ui: { description: 'E.g. Full day, Half day, 2–4 days' } }),
+      level:      text({ ui: { description: 'E.g. Scenery, Adventure, Culture, Road trip, Epic' } }),
+      highlights: json({ defaultValue: [], ui: { description: 'Array of strings with the route highlights' } }),
     },
   }),
 
@@ -387,13 +387,13 @@ export const lists: Lists = {
   RouteItinerary: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Itinerarios detallados',
+      label: 'Detailed itineraries',
       labelField: 'slug',
       listView: { initialColumns: ['slug', 'route', 'order', 'published'] },
     },
     fields: {
       published:    publishedField(),
-      slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Identificador único, ej. ubud-kintamani' } }),
+      slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Unique identifier, e.g. ubud-kintamani' } }),
       route:        relationship({ ref: 'Route.itinerary' }),
       image:        image({ storage: 'balibymade_media' }),
       order:        integer({ defaultValue: 0 }),
@@ -408,7 +408,7 @@ export const lists: Lists = {
   RouteItineraryTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Itinerarios detallados · Traducciones',
+      label: 'Detailed itineraries · Translations',
       listView: { initialColumns: ['itinerary', 'locale', 'title'] },
     },
     fields: {
@@ -416,15 +416,15 @@ export const lists: Lists = {
       locale:      text({ validation: { isRequired: true } }),
       title:       text({ validation: { isRequired: true } }),
       tagline:     text(),
-      badge:       text({ ui: { description: 'Ej. Day Tour' } }),
-      duration:    text({ ui: { description: 'Ej. Half day · ~7 hours' } }),
-      departure:   text({ ui: { description: 'Ej. Pick-up from your hotel in Ubud' } }),
-      price:       text({ ui: { description: 'Ej. From $60 / private car' } }),
-      groupSize:   text({ ui: { description: 'Ej. Up to 6 passengers' } }),
-      included:    json({ defaultValue: [], ui: { description: 'Array de strings: qué incluye' } }),
-      notIncluded: json({ defaultValue: [], ui: { description: 'Array de strings: qué no incluye' } }),
-      stops:       json({ defaultValue: [], ui: { description: 'Array de paradas: [{ n, time, place, desc }]' } }),
-      cta:         text({ ui: { description: 'Texto del botón de reserva' } }),
+      badge:       text({ ui: { description: 'E.g. Day Tour' } }),
+      duration:    text({ ui: { description: 'E.g. Half day · ~7 hours' } }),
+      departure:   text({ ui: { description: 'E.g. Pick-up from your hotel in Ubud' } }),
+      price:       text({ ui: { description: 'E.g. From $60 / private car' } }),
+      groupSize:   text({ ui: { description: 'E.g. Up to 6 passengers' } }),
+      included:    json({ defaultValue: [], ui: { description: 'Array of strings: what is included' } }),
+      notIncluded: json({ defaultValue: [], ui: { description: 'Array of strings: what is not included' } }),
+      stops:       json({ defaultValue: [], ui: { description: 'Array of stops: [{ n, time, place, desc }]' } }),
+      cta:         text({ ui: { description: 'Booking button text' } }),
     },
   }),
 
@@ -432,13 +432,13 @@ export const lists: Lists = {
   AirportRoute: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Rutas de aeropuerto',
+      label: 'Airport routes',
       labelField: 'slug',
       listView: { initialColumns: ['slug', 'priceUsd', 'order', 'published'] },
     },
     fields: {
       published:    publishedField(),
-      slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Ej. kuta-seminyak-legian' } }),
+      slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'E.g. kuta-seminyak-legian' } }),
       priceUsd:     integer({ validation: { isRequired: true } }),
       order:        integer({ defaultValue: 0 }),
       translations: relationship({ ref: 'AirportRouteTranslation.airportRoute', many: true }),
@@ -449,14 +449,15 @@ export const lists: Lists = {
   AirportRouteTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Rutas de aeropuerto · Traducciones',
+      label: 'Airport routes · Translations',
+      labelField: 'locale',
       listView: { initialColumns: ['airportRoute', 'locale', 'to', 'duration'] },
     },
     fields: {
       airportRoute: relationship({ ref: 'AirportRoute.translations' }),
       locale:       text({ validation: { isRequired: true } }),
-      to:           text({ validation: { isRequired: true }, ui: { description: 'Ej. Kuta / Seminyak / Legian' } }),
-      duration:     text({ ui: { description: 'Ej. ~45 min' } }),
+      to:           text({ validation: { isRequired: true }, ui: { description: 'E.g. Kuta / Seminyak / Legian' } }),
+      duration:     text({ ui: { description: 'E.g. ~45 min' } }),
     },
   }),
 
@@ -464,9 +465,9 @@ export const lists: Lists = {
   SiteChrome: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Textos globales (menú, footer, CTA)',
+      label: 'Global text (menu, footer, CTA)',
       labelField: 'label',
-      description: 'Debe existir una única fila.',
+      description: 'There should only be one row.',
     },
     fields: {
       label:        text({ defaultValue: 'Global', isIndexed: 'unique' }),
@@ -484,7 +485,8 @@ export const lists: Lists = {
   SiteChromeTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Textos globales · Traducciones',
+      label: 'Global text · Translations',
+      labelField: 'locale',
       listView: { initialColumns: ['chrome', 'locale', 'navHome'] },
     },
     fields: {
@@ -496,24 +498,24 @@ export const lists: Lists = {
       navRouteBuilder: text(),
       navAbout:        text(),
       navContact:      text(),
-      navCta:          text({ ui: { description: 'Ej. Book a trip' } }),
+      navCta:          text({ ui: { description: 'E.g. Book a trip' } }),
 
       footerTagline:    text(),
       footerLinksLabel: text(),
-      footerLinks:      json({ defaultValue: [], ui: { description: 'Array de 3 strings: Experiences, About Made, Contact' } }),
+      footerLinks:      json({ defaultValue: [], ui: { description: 'Array of 3 strings: Experiences, About Made, Contact' } }),
       footerSocialLabel: text(),
-      footerCredit:     text({ ui: { description: 'Ej. Web concept by' } }),
+      footerCredit:     text({ ui: { description: 'E.g. Web concept by' } }),
 
       ctaTitle: text(),
-      ctaSub:   linesField('Texto del banner CTA (ready to see the real Bali...)'),
+      ctaSub:   linesField('CTA banner text (ready to see the real Bali...)'),
       ctaBtn:   text(),
       ctaNote:  text(),
 
       routesSectionOverline: text(),
       routesSectionTitle:    text(),
-      routesSectionSub:      linesField('Subtítulo de la sección "10 rutas"'),
+      routesSectionSub:      linesField('Subtitle of the "10 routes" section'),
 
-      bookRouteCta: text({ ui: { description: 'Texto reutilizado en los botones de reserva de cada tarjeta de ruta' } }),
+      bookRouteCta: text({ ui: { description: 'Text reused in the booking buttons of each route card' } }),
     },
   }),
 
@@ -521,9 +523,9 @@ export const lists: Lists = {
   HomePage: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página: Home',
+      label: 'Page: Home',
       labelField: 'label',
-      description: 'Debe existir una única fila.',
+      description: 'There should only be one row.',
     },
     fields: {
       label:        text({ defaultValue: 'Home', isIndexed: 'unique' }),
@@ -540,7 +542,8 @@ export const lists: Lists = {
   HomePageTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página Home · Traducciones',
+      label: 'Home page · Translations',
+      labelField: 'locale',
       listView: { initialColumns: ['page', 'locale', 'heroH1a'] },
     },
     fields: {
@@ -548,9 +551,9 @@ export const lists: Lists = {
       locale: text({ validation: { isRequired: true } }),
 
       heroTag:    text(),
-      heroH1a:    text({ ui: { description: 'Primera línea del titular' } }),
-      heroH1b:    text({ ui: { description: 'Segunda línea del titular (en cursiva)' } }),
-      heroSub:    linesField('Subtítulo del hero'),
+      heroH1a:    text({ ui: { description: 'First line of the headline' } }),
+      heroH1b:    text({ ui: { description: 'Second line of the headline (italic)' } }),
+      heroSub:    linesField('Hero subtitle'),
       heroCta1:   text(),
       heroCta2:   text(),
       heroScroll: text(),
@@ -562,10 +565,10 @@ export const lists: Lists = {
 
       whyOverline: text(),
       whyTitle:    text(),
-      whyItems:    json({ defaultValue: [], ui: { description: 'Array [{ icon, title, desc }] — sección "Why Made"' } }),
+      whyItems:    json({ defaultValue: [], ui: { description: 'Array [{ icon, title, desc }] — "Why Made" section' } }),
 
-      faqTitle: text({ ui: { description: 'Título de la sección de preguntas frecuentes (SEO/GEO)' } }),
-      faqItems: json({ defaultValue: [], ui: { description: 'Array [{ question, answer }] — preguntas frecuentes, visibles en la home y usadas como FAQPage schema.org para SEO y motores de respuesta IA (GEO)' } }),
+      faqTitle: text({ ui: { description: 'Title of the FAQ section (SEO/GEO)' } }),
+      faqItems: json({ defaultValue: [], ui: { description: 'Array [{ question, answer }] — FAQs, shown on the home page and used as FAQPage schema.org for SEO and AI answer engines (GEO)' } }),
     },
   }),
 
@@ -573,9 +576,9 @@ export const lists: Lists = {
   ExperiencesPage: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página: Experiences',
+      label: 'Page: Experiences',
       labelField: 'label',
-      description: 'Debe existir una única fila.',
+      description: 'There should only be one row.',
     },
     fields: {
       label:        text({ defaultValue: 'Experiences', isIndexed: 'unique' }),
@@ -594,7 +597,8 @@ export const lists: Lists = {
   ExperiencesPageTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página Experiences · Traducciones',
+      label: 'Experiences page · Translations',
+      labelField: 'locale',
       listView: { initialColumns: ['page', 'locale', 'heroH1'] },
     },
     fields: {
@@ -604,22 +608,22 @@ export const lists: Lists = {
       heroTag: text(),
       heroH1:  text(),
       heroH1b: text(),
-      heroSub: linesField('Subtítulo del hero de Experiences'),
+      heroSub: linesField('Experiences hero subtitle'),
 
       includedOverline: text(),
       includedTitle:    text(),
-      includedItems:    json({ defaultValue: [], ui: { description: 'Array [{ icon, text }] — "Qué incluye cada ruta"' } }),
+      includedItems:    json({ defaultValue: [], ui: { description: 'Array [{ icon, text }] — "What each route includes"' } }),
 
       airportOverline:       text(),
       airportTitle:          text(),
       airportTagline:        text(),
       airportBadge:          text(),
-      airportPrice:          text({ ui: { description: 'Ej. From $25 / private car' } }),
-      airportShortDuration:  text({ ui: { description: 'Ej. 30 min – 3 hours' } }),
+      airportPrice:          text({ ui: { description: 'E.g. From $25 / private car' } }),
+      airportShortDuration:  text({ ui: { description: 'E.g. 30 min – 3 hours' } }),
       airportGroupSize:      text(),
-      airportDesc:           linesField('Descripción del bloque de transfer aeropuerto'),
-      airportIncluded:       json({ defaultValue: [], ui: { description: 'Array de strings' } }),
-      airportNotIncluded:    json({ defaultValue: [], ui: { description: 'Array de strings' } }),
+      airportDesc:           linesField('Airport transfer block description'),
+      airportIncluded:       json({ defaultValue: [], ui: { description: 'Array of strings' } }),
+      airportNotIncluded:    json({ defaultValue: [], ui: { description: 'Array of strings' } }),
       airportRoutesLabel:    text(),
       airportNote:           text(),
       airportCta:            text(),
@@ -627,7 +631,7 @@ export const lists: Lists = {
       customTag:    text(),
       customTitle:  text(),
       customPrice:  text(),
-      customDesc:   linesField('Descripción del bloque "ruta a medida"'),
+      customDesc:   linesField('"Custom route" block description'),
       customCta:    text(),
     },
   }),
@@ -636,9 +640,9 @@ export const lists: Lists = {
   AboutPage: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página: About',
+      label: 'Page: About',
       labelField: 'label',
-      description: 'Debe existir una única fila.',
+      description: 'There should only be one row.',
     },
     fields: {
       label:        text({ defaultValue: 'About', isIndexed: 'unique' }),
@@ -657,29 +661,30 @@ export const lists: Lists = {
   AboutPageTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página About · Traducciones',
+      label: 'About page · Translations',
+      labelField: 'locale',
       listView: { initialColumns: ['page', 'locale', 'bioH1'] },
     },
     fields: {
       page:   relationship({ ref: 'AboutPage.translations' }),
       locale: text({ validation: { isRequired: true } }),
 
-      quoteText:   linesField('Cita del hero (usar \\n para salto de línea)'),
+      quoteText:   linesField('Hero quote (use \\n for line break)'),
       quoteCredit: text({ defaultValue: '— Made' }),
 
       bioOverline: text(),
       bioH1:       text(),
       bioSub:      text(),
-      bioP1:       linesField('Párrafo 1 de la biografía'),
-      bioP2:       linesField('Párrafo 2 de la biografía'),
-      bioP3:       linesField('Párrafo 3 de la biografía'),
+      bioP1:       linesField('Biography paragraph 1'),
+      bioP2:       linesField('Biography paragraph 2'),
+      bioP3:       linesField('Biography paragraph 3'),
 
-      availableBadge: text({ ui: { description: 'Ej. Available for private trips' } }),
+      availableBadge: text({ ui: { description: 'E.g. Available for private trips' } }),
 
       valuesOverline: text(),
-      valuesItems:    json({ defaultValue: [], ui: { description: 'Array [{ icon, title, desc }] — valores de Made' } }),
+      valuesItems:    json({ defaultValue: [], ui: { description: "Array [{ icon, title, desc }] — Made's values" } }),
 
-      ctaQuestion: text({ ui: { description: 'Ej. Want to meet Made?' } }),
+      ctaQuestion: text({ ui: { description: 'E.g. Want to meet Made?' } }),
     },
   }),
 
@@ -687,9 +692,9 @@ export const lists: Lists = {
   ContactPage: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página: Contact',
+      label: 'Page: Contact',
       labelField: 'label',
-      description: 'Debe existir una única fila.',
+      description: 'There should only be one row.',
     },
     fields: {
       label:        text({ defaultValue: 'Contact', isIndexed: 'unique' }),
@@ -707,7 +712,8 @@ export const lists: Lists = {
   ContactPageTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página Contact · Traducciones',
+      label: 'Contact page · Translations',
+      labelField: 'locale',
       listView: { initialColumns: ['page', 'locale', 'heroH1'] },
     },
     fields: {
@@ -717,7 +723,7 @@ export const lists: Lists = {
       heroTag: text(),
       heroH1:  text(),
       heroH1b: text(),
-      heroSub: linesField('Subtítulo del hero de Contact'),
+      heroSub: linesField('Contact hero subtitle'),
 
       formNameLabel:          text(),
       formEmailLabel:         text(),
@@ -732,7 +738,7 @@ export const lists: Lists = {
       formWaSublabel:          text(),
 
       noteTitle: text(),
-      noteItems: json({ defaultValue: [], ui: { description: 'Array de strings: qué incluir en el mensaje' } }),
+      noteItems: json({ defaultValue: [], ui: { description: 'Array of strings: what to include in the message' } }),
     },
   }),
 
@@ -741,7 +747,7 @@ export const lists: Lists = {
     access: publicReadAdminWrite,
     graphql: { plural: 'SEOPageItems' },
     ui: {
-      label: 'SEO por página',
+      label: 'SEO per page',
       labelField: 'slug',
       listView: { initialColumns: ['slug', 'order'] },
     },
@@ -756,14 +762,14 @@ export const lists: Lists = {
   SEOPageTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'SEO por página · Traducciones',
+      label: 'SEO per page · Translations',
       listView: { initialColumns: ['seoPage', 'locale', 'title'] },
     },
     fields: {
       seoPage:     relationship({ ref: 'SEOPage.translations' }),
       locale:      text({ validation: { isRequired: true } }),
-      title:       text({ validation: { isRequired: true }, ui: { description: 'Title tag — máx. ~60 caracteres' } }),
-      description: text({ ui: { displayMode: 'textarea', description: 'Meta description — máx. ~155 caracteres' } }),
+      title:       text({ validation: { isRequired: true }, ui: { description: 'Title tag — max ~60 characters' } }),
+      description: text({ ui: { displayMode: 'textarea', description: 'Meta description — max ~155 characters' } }),
     },
   }),
 
@@ -771,9 +777,9 @@ export const lists: Lists = {
   RouteBuilderPage: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página: Route Builder',
+      label: 'Page: Route Builder',
       labelField: 'label',
-      description: 'Debe existir una única fila.',
+      description: 'There should only be one row.',
     },
     fields: {
       label:        text({ defaultValue: 'Route Builder', isIndexed: 'unique' }),
@@ -790,7 +796,8 @@ export const lists: Lists = {
   RouteBuilderPageTranslation: list({
     access: publicReadAdminWrite,
     ui: {
-      label: 'Página Route Builder · Traducciones',
+      label: 'Route Builder page · Translations',
+      labelField: 'locale',
       listView: { initialColumns: ['page', 'locale', 'h1'] },
     },
     fields: {
@@ -800,14 +807,14 @@ export const lists: Lists = {
       tag:               text(),
       h1:                text(),
       h1b:               text(),
-      sub:               linesField('Subtítulo del hero del Route Builder'),
+      sub:               linesField('Route Builder hero subtitle'),
       searchPlaceholder: text(),
-      destinationsLabel: text({ ui: { description: 'Ej. destinations' } }),
-      yourRoute:         text({ ui: { description: 'Ej. Your Route' } }),
-      stops:             text({ ui: { description: 'Ej. stops' } }),
-      totalKm:           text({ ui: { description: 'Ej. Total' } }),
+      destinationsLabel: text({ ui: { description: 'E.g. destinations' } }),
+      yourRoute:         text({ ui: { description: 'E.g. Your Route' } }),
+      stops:             text({ ui: { description: 'E.g. stops' } }),
+      totalKm:           text({ ui: { description: 'E.g. Total' } }),
       estimatedTime:     text(),
-      kmhNote:           text({ ui: { description: 'Ej. Avg. 35 km/h (Bali mountain roads)' } }),
+      kmhNote:           text({ ui: { description: 'E.g. Avg. 35 km/h (Bali mountain roads)' } }),
       addStops:          text(),
       clearRoute:        text(),
       bookCta:           text(),
@@ -817,7 +824,7 @@ export const lists: Lists = {
       addToRoute:        text(),
       startPoint:        text(),
       noResults:         text(),
-      approx:            text({ ui: { description: 'Ej. approx.' } }),
+      approx:            text({ ui: { description: 'E.g. approx.' } }),
     },
   }),
 }

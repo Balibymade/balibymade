@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { SiteChrome, SiteSettings } from '../../lib/queries'
+import { link } from '../../lib/links'
 import s from './Footer.module.scss'
 
 interface Props { locale: string; chrome: SiteChrome; settings: SiteSettings | null }
@@ -21,7 +22,7 @@ export default function Footer({ locale, chrome, settings }: Props) {
         <div className={s.col}>
           <p className={s.colTitle}>{chrome.footerLinksLabel}</p>
           {chrome.footerLinks.map((label, i) => (
-            <Link key={slugs[i]} href={`/${locale}/${slugs[i]}`} className={s.colLink}>
+            <Link key={slugs[i]} href={link(locale, `/${slugs[i]}`)} className={s.colLink}>
               {label}
             </Link>
           ))}

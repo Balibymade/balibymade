@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import type { SiteChrome, LocaleSetting } from '../../lib/queries'
+import { link as previewLink } from '../../lib/links'
 import s from './Header.module.scss'
 
 interface Props {
@@ -66,14 +67,14 @@ export default function Header({ locale, transparent = false, chrome, enabledLoc
 
   function localePath(targetLocale: string): string {
     const path = segment ? `/${segment}` : ''
-    return `/${targetLocale}${path}`
+    return previewLink(targetLocale, path)
   }
 
   return (
     <>
       <header className={`${s.header} ${isTransparent ? s.headerTransparent : s.headerSolid}`}>
         <div className={s.inner}>
-          <Link href={`/${locale}`} className={s.logo} onClick={() => setMenuOpen(false)}>
+          <Link href={previewLink(locale)} className={s.logo} onClick={() => setMenuOpen(false)}>
             <span className={s.logoSub}>{logoSub}</span>
             <span className={s.logoMain}>{logoMain}</span>
           </Link>
@@ -82,7 +83,7 @@ export default function Header({ locale, transparent = false, chrome, enabledLoc
             {NAV.map(item => (
               <Link
                 key={item.key}
-                href={`/${locale}${item.slug ? `/${item.slug}` : ''}`}
+                href={previewLink(locale, item.slug ? `/${item.slug}` : '')}
                 className={`${s.navLink} ${activePage === item.key ? s.navLinkActive : ''}`}
               >
                 {item.label}
@@ -114,7 +115,7 @@ export default function Header({ locale, transparent = false, chrome, enabledLoc
               )}
             </div>
 
-            <Link href={`/${locale}/contact`} className={s.ctaBtn}>{chrome.navCta}</Link>
+            <Link href={previewLink(locale, "/contact")} className={s.ctaBtn}>{chrome.navCta}</Link>
 
             <button
               className={`${s.hamburger} ${menuOpen ? s.hamburgerOpen : ''}`}
@@ -133,7 +134,7 @@ export default function Header({ locale, transparent = false, chrome, enabledLoc
         {NAV.map(item => (
           <Link
             key={item.key}
-            href={`/${locale}${item.slug ? `/${item.slug}` : ''}`}
+            href={previewLink(locale, item.slug ? `/${item.slug}` : '')}
             className={`${s.mobileNavLink} ${activePage === item.key ? s.mobileNavLinkActive : ''}`}
             onClick={() => setMenuOpen(false)}
           >
@@ -141,7 +142,7 @@ export default function Header({ locale, transparent = false, chrome, enabledLoc
           </Link>
         ))}
 
-        <Link href={`/${locale}/contact`} className={s.mobileCta} onClick={() => setMenuOpen(false)}>
+        <Link href={previewLink(locale, "/contact")} className={s.mobileCta} onClick={() => setMenuOpen(false)}>
           {chrome.navCta}
         </Link>
 

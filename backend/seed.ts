@@ -59,21 +59,22 @@ async function main() {
   console.log('→ Categorías de destino')
   const categorySlugs = Object.keys(CATEGORY_META).filter(k => k !== 'all') as (keyof typeof CATEGORY_META)[]
   let catOrder = 0
+  const categoryTranslations: { categoryId: string; locale: string; label: string }[] = []
   for (const slug of categorySlugs) {
     const meta = CATEGORY_META[slug]
     const category = await prisma.destinationCategory.create({
       data: { slug, emoji: meta.emoji, color: meta.color, order: catOrder++ },
     })
     for (const locale of LOCALE_CODES) {
-      await prisma.destinationCategoryTranslation.create({
-        data: { categoryId: category.id, locale, label: categoryLabel(meta, locale) },
-      })
+      categoryTranslations.push({ categoryId: category.id, locale, label: categoryLabel(meta, locale) })
     }
   }
+  await prisma.destinationCategoryTranslation.createMany({ data: categoryTranslations })
 
   // ── DESTINATIONS (141) ───────────────────────────────────────────────────────
   console.log(`→ Destinos (${DESTINATIONS.length})`)
   let destOrder = 0
+  const destinationTranslations: { destinationId: string; locale: string; name: string }[] = []
   for (const d of DESTINATIONS) {
     const dest = await prisma.destination.create({
       data: {
@@ -91,10 +92,11 @@ async function main() {
     for (const locale of LOCALE_CODES) {
       const tr = (d.translations as Record<string, { name: string } | undefined>)[locale]
       const name = tr?.name ?? d.translations.en.name
-      await prisma.destinationTranslation.create({
-        data: { destinationId: dest.id, locale, name },
-      })
+      destinationTranslations.push({ destinationId: dest.id, locale, name })
     }
+  }
+  for (let i = 0; i < destinationTranslations.length; i += 500) {
+    await prisma.destinationTranslation.createMany({ data: destinationTranslations.slice(i, i + 500) })
   }
 
   // ── ROUTES (10) ───────────────────────────────────────────────────────────────

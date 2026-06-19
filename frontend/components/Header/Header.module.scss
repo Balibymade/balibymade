@@ -7,7 +7,7 @@ $terra:  #b85738;
 // ── HEADER BAR ─────────────────────────────────────────
 .header {
   position: fixed;
-  top: 40px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 40;
@@ -141,7 +141,7 @@ $terra:  #b85738;
 
 .langDropdown {
   position: fixed;
-  top: 108px;
+  top: 68px;
   right: 16px;
   background: rgba(14,26,18,0.98);
   border: 1px solid rgba(201,168,76,0.18);
@@ -255,7 +255,7 @@ $terra:  #b85738;
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 108px;    // 40px Pablo topbar + 68px BMHeader
+    top: 68px;     // altura del header
     left: 0;
     right: 0;
     bottom: 0;

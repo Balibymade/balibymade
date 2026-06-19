@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getAboutPage, getSiteChrome, getSiteSettings } from '../../../lib/queries'
 import { buildMetadata } from '../../../lib/seoMetadata'
+import { link } from '../../../lib/links'
 import s from './About.module.scss'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -59,7 +60,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               <p className={s.bioPara}>{page.bioP1}</p>
               <p className={s.bioPara}>{page.bioP2}</p>
               <p className={s.bioPara}>{page.bioP3}</p>
-              <Link href={`/${locale}/contact`} className={s.bioBtn}>{chrome.navCta}</Link>
+              <Link href={link(locale, "/contact")} className={s.bioBtn}>{chrome.navCta}</Link>
             </div>
           </div>
         </div>

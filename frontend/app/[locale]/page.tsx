@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getHomePage, getSiteChrome, getRoutes, getSiteSettings } from '../../lib/queries'
 import { buildMetadata } from '../../lib/seoMetadata'
+import { link } from '../../lib/links'
 import s from './Home.module.scss'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -47,8 +48,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </h1>
             <p className={s.heroSub}>{home.heroSub}</p>
             <div className={s.heroCtas}>
-              <Link href={`/${locale}/experiences`} className={s.btnTerra}>{home.heroCta1}</Link>
-              <Link href={`/${locale}/about`} className={s.btnGhost}>{home.heroCta2}</Link>
+              <Link href={link(locale, "/experiences")} className={s.btnTerra}>{home.heroCta1}</Link>
+              <Link href={link(locale, "/about")} className={s.btnGhost}>{home.heroCta2}</Link>
             </div>
           </div>
 
@@ -102,7 +103,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                     <div className={s.routeMeta}><span className={s.routeDuration}>🚗 {tr.duration}</span></div>
                     <h3 className={s.routeTitle}>{tr.title}</h3>
                     <p className={s.routeDesc}>{tr.path.split('·').slice(0, 3).join('·')}</p>
-                    <Link href={`/${locale}/experiences`} className={s.routeCta}>
+                    <Link href={link(locale, "/experiences")} className={s.routeCta}>
                       {chrome.bookRouteCta} →
                     </Link>
                   </div>
@@ -111,7 +112,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             })}
           </div>
           <div className={s.routesSeeAll}>
-            <Link href={`/${locale}/experiences`} className={s.routesSeeAllBtn}>
+            <Link href={link(locale, "/experiences")} className={s.routesSeeAllBtn}>
               {routes.length} routes →
             </Link>
           </div>
