@@ -17,7 +17,7 @@ $terraH: #a04830;
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   overflow: hidden;
   padding-top: 76px;
   padding-bottom: 72px;
@@ -59,7 +59,7 @@ $terraH: #a04830;
   @media (max-width: 900px) { grid-template-columns: 1fr; }
 }
 
-.heroLeft { align-self: start; margin-top: -16px; }
+.heroLeft { align-self: center; }
 
 .heroTag {
   display: inline-block;

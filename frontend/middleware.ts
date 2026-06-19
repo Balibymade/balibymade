@@ -63,6 +63,8 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/flags/')  ||
     pathname.startsWith('/demos/')  ||
     pathname.startsWith('/favicon') ||
+    pathname === '/icon.png' ||
+    pathname === '/apple-icon.png' ||
     pathname === '/sitemap.xml' ||
     pathname === '/robots.txt'
   ) {

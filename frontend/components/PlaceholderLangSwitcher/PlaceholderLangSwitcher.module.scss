@@ -1,0 +1,85 @@
+$gold:  #c9a84c;
+$cream: #f5f0e8;
+
+.langSelect {
+  position: relative;
+  margin-top: 28px;
+  display: inline-block;
+}
+
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(201, 168, 76, 0.35);
+  }
+}
+
+.langCode {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(245, 240, 232, 0.8);
+  letter-spacing: 0.5px;
+}
+
+.langChevron {
+  font-size: 10px;
+  color: rgba(201, 168, 76, 0.7);
+  transition: transform 0.2s;
+}
+
+.langChevronOpen { transform: rotate(180deg); }
+
+.langDropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(14, 26, 18, 0.98);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 8px;
+  padding: 4px;
+  min-width: 170px;
+  max-height: 60vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  z-index: 50;
+}
+
+.langOption {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(201, 168, 76, 0.1); }
+}
+
+.langOptionActive {
+  background: rgba(201, 168, 76, 0.12);
+  .langOptionLabel { color: $gold; }
+}
+
+.langOptionLabel {
+  font-size: 13px;
+  color: rgba(245, 240, 232, 0.8);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.flag {
+  border-radius: 2px;
+  object-fit: cover;
+  flex-shrink: 0;
+}

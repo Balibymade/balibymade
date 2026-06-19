@@ -21,7 +21,7 @@ $terraH: #a04830;
   padding-top: 76px; // 68px header + 8px buffer
   padding-bottom: 72px;
   box-sizing: border-box;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .heroBg {
@@ -58,8 +58,7 @@ $terraH: #a04830;
 }
 
 .heroLeft {
-  align-self: start;
-  margin-top: -24px;
+  align-self: center;
 }
 
 .heroTag {

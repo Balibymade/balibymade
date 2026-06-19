@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { getEnabledLocales, getHomePage } from '../lib/queries'
+import PlaceholderLangSwitcher from '../components/PlaceholderLangSwitcher/PlaceholderLangSwitcher'
 import styles from './page.module.scss'
 
 export const metadata: Metadata = {
@@ -36,20 +37,29 @@ const COMING_SOON: Record<string, string> = {
 
 const DEFAULT_TAGLINE = 'Your private guide to the real Bali.'
 
-export default async function PlaceholderPage() {
-  const [enabledLocales, headersList] = await Promise.all([
+export default async function PlaceholderPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string }>
+}) {
+  const [enabledLocales, headersList, params] = await Promise.all([
     getEnabledLocales(),
     headers(),
+    searchParams,
   ])
 
-  const acceptLanguage = headersList.get('accept-language') ?? ''
-  const preferredCodes = acceptLanguage
-    .split(',')
-    .map(lang => lang.split(';')[0].trim().toLowerCase().split('-')[0])
-    .filter(Boolean)
-
   const enabledCodes = enabledLocales.map(l => l.code)
-  const locale = preferredCodes.find(code => enabledCodes.includes(code)) ?? 'en'
+
+  let locale = params.lang && enabledCodes.includes(params.lang) ? params.lang : undefined
+
+  if (!locale) {
+    const acceptLanguage = headersList.get('accept-language') ?? ''
+    const preferredCodes = acceptLanguage
+      .split(',')
+      .map(lang => lang.split(';')[0].trim().toLowerCase().split('-')[0])
+      .filter(Boolean)
+    locale = preferredCodes.find(code => enabledCodes.includes(code)) ?? 'en'
+  }
 
   const home = await getHomePage(locale)
   const tagline = home?.heroSub ?? DEFAULT_TAGLINE
@@ -63,6 +73,7 @@ export default async function PlaceholderPage() {
         </h1>
         <p className={styles.tagline}>{tagline}</p>
         <p className={styles.soon}>{soon}</p>
+        <PlaceholderLangSwitcher locales={enabledLocales} current={locale} />
       </div>
     </main>
   )
