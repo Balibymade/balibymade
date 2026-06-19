@@ -7,12 +7,10 @@ const { withAuth } = createAuth({
   sessionData: 'name createdAt',
   secretField: 'password',
 
-  // Solo activo en desarrollo para crear el primer usuario admin
-  ...(process.env.NODE_ENV !== 'production' && {
-    initFirstItem: {
-      fields: ['name', 'email', 'password'],
-    },
-  }),
+  // TEMPORAL: activo en producción para crear el primer admin vía /init — revertir tras crear el usuario
+  initFirstItem: {
+    fields: ['name', 'email', 'password'],
+  },
 })
 
 const sessionMaxAge = 60 * 60 * 24 * 30 // 30 días
