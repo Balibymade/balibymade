@@ -1,0 +1,38 @@
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #0e1a14;
+  color: #f5f0e8;
+  text-align: center;
+  padding: 24px;
+}
+
+.inner {
+  max-width: 480px;
+}
+
+.logo {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 16px;
+
+  span {
+    color: #c8a87a;
+  }
+}
+
+.tagline {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  opacity: 0.85;
+  margin: 0 0 8px;
+}
+
+.soon {
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}

@@ -69,6 +69,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Preview gate: sin ?preview=true, todo el tráfico ve el placeholder de la home
+  const isPreview = searchParams.get('preview') === 'true'
+  if (!isPreview && pathname !== '/') {
+    return NextResponse.rewrite(new URL('/', request.url))
+  }
+  if (!isPreview) {
+    return NextResponse.next()
+  }
+
   await fetchEnabledLocales() // calienta la caché (fallback: todos los locales si Keystone no responde)
 
   return intlMiddleware(request)
