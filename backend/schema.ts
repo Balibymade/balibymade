@@ -11,7 +11,9 @@ import {
   image,
   json,
   virtual,
+  select,
 } from '@keystone-6/core/fields'
+import { document } from '@keystone-6/fields-document'
 import { type Lists } from '.keystone/types'
 
 // Campo virtual "Locale + contenido" para que las listas de traducción (con muchas filas
@@ -849,6 +851,42 @@ export const lists: Lists = {
       startPoint:        text({ ui: { description: 'Label for the starting point of the route, e.g. Ubud' } }),
       noResults:         text({ ui: { description: 'Text shown when a destination search has no results' } }),
       approx:            text({ ui: { description: 'E.g. approx.' } }),
+    },
+  }),
+
+  // ── MANUALS & GUIDES (internal docs, not public — Keystone usage guide + brand style guide) ──
+  Manual: list({
+    access: adminOnly,
+    ui: {
+      label: 'Manuals & Guides',
+      labelField: 'title',
+      description: 'Internal reference docs for whoever manages this website day to day — not shown on the public site.',
+      listView: { initialColumns: ['title', 'category', 'language', 'order'] },
+    },
+    fields: {
+      title:    text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'E.g. "Keystone User Guide (English)"' } }),
+      category: select({
+        validation: { isRequired: true },
+        options: [
+          { label: 'Keystone Guide', value: 'keystone-guide' },
+          { label: 'Style Guide', value: 'style-guide' },
+        ],
+        ui: { description: 'Used to group the docs in this list' },
+      }),
+      language: select({
+        validation: { isRequired: true },
+        options: [
+          { label: 'English', value: 'en' },
+          { label: 'Bahasa Indonesia', value: 'id' },
+        ],
+      }),
+      order:   integer({ defaultValue: 0, ui: { description: 'Order in the Manuals & Guides list' } }),
+      content: document({
+        formatting: true,
+        links: true,
+        dividers: true,
+        headingLevels: [1, 2, 3],
+      }),
     },
   }),
 }

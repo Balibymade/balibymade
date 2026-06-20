@@ -8,7 +8,8 @@
     "migrate": "node scripts/migrate-safe.js",
     "start": "keystone start",
     "start:prod": "npm run migrate && npm run start",
-    "seed": "dotenv -e .env -- ts-node --transpile-only seed.ts"
+    "seed": "dotenv -e .env -- ts-node --transpile-only seed.ts",
+    "seed:manuals": "dotenv -e .env -- ts-node --transpile-only seed-manuals.ts"
   },
   "dependencies": {
     "@keystone-6/auth": "^8.0.0",
