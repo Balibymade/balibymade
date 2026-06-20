@@ -278,6 +278,92 @@ const styleGuideId: Node[] = [
   ]),
 ]
 
+// ── UMAMI GUIDE — ENGLISH ─────────────────────────────────────────────────────
+const umamiGuideEn: Node[] = [
+  h1('Umami Guide — Visitor Statistics'),
+  p('Umami is a small, separate website that tells you how many people are visiting balibymade.com, where they come from, and which pages they like the most. It does not show names or personal details — it respects everyone\'s privacy.'),
+  p('Think of it like a counter at the door of a shop, but for a website.'),
+
+  h2('1. How to log in'),
+  p('Open this address: https://analytics.balibymade.com'),
+  p('Type your email and password. Click "Login".'),
+
+  h2('2. What you see first'),
+  p('After logging in, click on the website called "Bali By Made". You will see a page full of numbers and a graph — this is the "dashboard".'),
+
+  h2('3. The 4 numbers at the top'),
+  bullets([
+    '"Visitors" — how many different people visited the website',
+    '"Views" — how many pages were opened in total (one person can open several pages)',
+    '"Bounce rate" — how many people left after seeing only one page (a high number can mean a page is not interesting enough)',
+    '"Visit duration" — on average, how long people stay on the website',
+  ]),
+
+  h2('4. Choosing a date range'),
+  p('At the top right of the page there is a button (often showing "Last 24 hours" or similar). Click it to choose a different period: today, this week, this month, or a custom range.'),
+
+  h2('5. Where people come from and what they use'),
+  p('Scroll down on the dashboard. You will find:'),
+  bullets([
+    '"Pages" — the most visited pages of the website (this tells you what people care about the most)',
+    '"Referrers" — where people came from before reaching the site (Google, Instagram, a direct link, etc.)',
+    '"Countries" — which countries the visitors are from',
+    '"Devices" — whether people use a phone, a tablet or a computer',
+  ]),
+
+  h2('6. Why this is useful'),
+  p('You don\'t need to check this every day. Once in a while, it can help you understand things like:'),
+  bullets([
+    'Which page people like the most (maybe the "Experiences" page, or the Route Builder)',
+    'Whether more people visit from phones or computers',
+    'Whether visitors come mostly from Instagram, Google, or somewhere else',
+  ]),
+  p('If a number looks strange or you are not sure what it means, just ask your developer — there is no need to worry about it on your own.'),
+]
+
+// ── UMAMI GUIDE — BAHASA INDONESIA ───────────────────────────────────────────
+const umamiGuideId: Node[] = [
+  h1('Panduan Umami — Statistik Pengunjung'),
+  p('Umami adalah website kecil terpisah yang memberi tahu Anda berapa banyak orang yang mengunjungi balibymade.com, dari mana mereka berasal, dan halaman mana yang paling mereka sukai. Umami tidak menampilkan nama atau data pribadi — ia menghormati privasi semua orang.'),
+  p('Anggap saja seperti penghitung pengunjung di pintu sebuah toko, tapi untuk website.'),
+
+  h2('1. Cara masuk (login)'),
+  p('Buka alamat ini: https://analytics.balibymade.com'),
+  p('Ketik email dan password Anda. Klik "Login".'),
+
+  h2('2. Apa yang pertama kali Anda lihat'),
+  p('Setelah masuk, klik website bernama "Bali By Made". Anda akan melihat halaman penuh angka dan grafik — ini disebut "dashboard".'),
+
+  h2('3. 4 angka di bagian atas'),
+  bullets([
+    '"Visitors" — berapa banyak orang berbeda yang mengunjungi website',
+    '"Views" — berapa banyak halaman yang dibuka secara total (satu orang bisa membuka beberapa halaman)',
+    '"Bounce rate" — berapa banyak orang yang pergi setelah hanya melihat satu halaman (angka tinggi bisa berarti halaman tersebut kurang menarik)',
+    '"Visit duration" — rata-rata berapa lama orang bertahan di website',
+  ]),
+
+  h2('4. Memilih rentang tanggal'),
+  p('Di kanan atas halaman ada tombol (biasanya menunjukkan "Last 24 hours" atau serupa). Klik tombol itu untuk memilih periode lain: hari ini, minggu ini, bulan ini, atau rentang khusus.'),
+
+  h2('5. Dari mana orang berasal dan apa yang mereka gunakan'),
+  p('Gulir ke bawah pada dashboard. Anda akan menemukan:'),
+  bullets([
+    '"Pages" — halaman yang paling sering dikunjungi (ini menunjukkan apa yang paling diminati orang)',
+    '"Referrers" — dari mana orang datang sebelum mencapai website (Google, Instagram, link langsung, dll.)',
+    '"Countries" — dari negara mana para pengunjung berasal',
+    '"Devices" — apakah orang menggunakan ponsel, tablet, atau komputer',
+  ]),
+
+  h2('6. Mengapa ini berguna'),
+  p('Anda tidak perlu memeriksa ini setiap hari. Sesekali, ini bisa membantu Anda memahami hal-hal seperti:'),
+  bullets([
+    'Halaman mana yang paling disukai orang (mungkin halaman "Experiences", atau Route Builder)',
+    'Apakah lebih banyak orang mengunjungi dari ponsel atau komputer',
+    'Apakah pengunjung sebagian besar datang dari Instagram, Google, atau tempat lain',
+  ]),
+  p('Jika ada angka yang terlihat aneh atau Anda tidak yakin artinya, tanyakan saja kepada developer Anda — tidak perlu khawatir memikirkannya sendiri.'),
+]
+
 async function upsertManual(title: string, category: string, language: string, order: number, content: Node[]) {
   const existing = await prisma.manual.findFirst({ where: { title } })
   if (existing) {
@@ -293,6 +379,8 @@ async function main() {
   await upsertManual('Keystone User Guide (Bahasa Indonesia)', 'keystone-guide', 'id', 1, keystoneGuideId)
   await upsertManual('Bali By Made — Brand Style Guide (English)', 'style-guide', 'en', 2, styleGuideEn)
   await upsertManual('Bali By Made — Panduan Gaya Merek (Bahasa Indonesia)', 'style-guide', 'id', 3, styleGuideId)
+  await upsertManual('Umami Guide — Visitor Statistics (English)', 'umami-guide', 'en', 4, umamiGuideEn)
+  await upsertManual('Panduan Umami — Statistik Pengunjung (Bahasa Indonesia)', 'umami-guide', 'id', 5, umamiGuideId)
   console.log('✅ Manuals seed completado.')
 }
 

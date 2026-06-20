@@ -870,6 +870,7 @@ export const lists: Lists = {
         options: [
           { label: 'Keystone Guide', value: 'keystone-guide' },
           { label: 'Style Guide', value: 'style-guide' },
+          { label: 'Umami Guide', value: 'umami-guide' },
         ],
         ui: { description: 'Used to group the docs in this list' },
       }),
