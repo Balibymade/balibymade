@@ -1,4 +1,4 @@
-import { list } from '@keystone-6/core'
+import { list, graphql } from '@keystone-6/core'
 import { publicReadAdminWrite, adminOnly } from './access'
 import {
   text,
@@ -10,8 +10,23 @@ import {
   relationship,
   image,
   json,
+  virtual,
 } from '@keystone-6/core/fields'
 import { type Lists } from '.keystone/types'
+
+// Campo virtual "Locale + contenido" para que las listas de traducción (con muchas filas
+// por entidad padre: Destinos, Rutas, Categorías...) se identifiquen de un vistazo en lugar
+// de mostrar un ID o solo el código de idioma repetido.
+const displayLabel = (contentField: string) =>
+  virtual({
+    field: graphql.field({
+      type: graphql.String,
+      resolve(item: any) {
+        const content = item[contentField]
+        return content ? `${item.locale} — ${content}` : item.locale
+      },
+    }),
+  })
 
 const publishedField = () => checkbox({
   defaultValue: false,
@@ -295,12 +310,14 @@ export const lists: Lists = {
     access: publicReadAdminWrite,
     ui: {
       label: 'Destination categories · Translations',
+      labelField: 'displayLabel',
       listView: { initialColumns: ['category', 'locale', 'label'] },
     },
     fields: {
-      category: relationship({ ref: 'DestinationCategory.translations' }),
-      locale:   text({ validation: { isRequired: true } }),
-      label:    text({ validation: { isRequired: true } }),
+      category:    relationship({ ref: 'DestinationCategory.translations' }),
+      locale:      text({ validation: { isRequired: true } }),
+      label:       text({ validation: { isRequired: true } }),
+      displayLabel: displayLabel('label'),
     },
   }),
 
@@ -316,8 +333,8 @@ export const lists: Lists = {
       published:        publishedField(),
       slug:              text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'Unique identifier, e.g. ubud, monkey-forest, tegallalang' } }),
       category:          relationship({ ref: 'DestinationCategory' }),
-      lat:               float({ validation: { isRequired: true } }),
-      lng:               float({ validation: { isRequired: true } }),
+      lat:               float({ validation: { isRequired: true }, ui: { description: 'GPS latitude, e.g. -8.4305 (use Google Maps "what\'s here" to find it)' } }),
+      lng:               float({ validation: { isRequired: true }, ui: { description: 'GPS longitude, e.g. 115.2502 (use Google Maps "what\'s here" to find it)' } }),
       region:             text({ validation: { isRequired: true }, ui: { description: 'Region or area, e.g. Ubud, Sidemen, Amed' } }),
       priceFromUbud:      integer({ validation: { isRequired: true }, ui: { description: 'Estimated price in USD, private car from Ubud' } }),
       driveMinFromUbud:   integer({ validation: { isRequired: true }, ui: { description: 'Drive minutes from Ubud' } }),
@@ -331,12 +348,14 @@ export const lists: Lists = {
     access: publicReadAdminWrite,
     ui: {
       label: 'Destinations · Translations',
+      labelField: 'displayLabel',
       listView: { initialColumns: ['destination', 'locale', 'name'] },
     },
     fields: {
       destination: relationship({ ref: 'Destination.translations' }),
       locale:      text({ validation: { isRequired: true } }),
       name:        text({ validation: { isRequired: true } }),
+      displayLabel: displayLabel('name'),
     },
   }),
 
@@ -368,6 +387,7 @@ export const lists: Lists = {
     access: publicReadAdminWrite,
     ui: {
       label: 'Routes · Translations',
+      labelField: 'displayLabel',
       listView: { initialColumns: ['route', 'locale', 'title'] },
     },
     fields: {
@@ -380,6 +400,7 @@ export const lists: Lists = {
       duration:   text({ ui: { description: 'E.g. Full day, Half day, 2–4 days' } }),
       level:      text({ ui: { description: 'E.g. Scenery, Adventure, Culture, Road trip, Epic' } }),
       highlights: json({ defaultValue: [], ui: { description: 'Array of strings with the route highlights' } }),
+      displayLabel: displayLabel('title'),
     },
   }),
 
@@ -409,6 +430,7 @@ export const lists: Lists = {
     access: publicReadAdminWrite,
     ui: {
       label: 'Detailed itineraries · Translations',
+      labelField: 'displayLabel',
       listView: { initialColumns: ['itinerary', 'locale', 'title'] },
     },
     fields: {
@@ -425,6 +447,7 @@ export const lists: Lists = {
       notIncluded: json({ defaultValue: [], ui: { description: 'Array of strings: what is not included' } }),
       stops:       json({ defaultValue: [], ui: { description: 'Array of stops: [{ n, time, place, desc }]' } }),
       cta:         text({ ui: { description: 'Booking button text' } }),
+      displayLabel: displayLabel('title'),
     },
   }),
 
@@ -439,7 +462,7 @@ export const lists: Lists = {
     fields: {
       published:    publishedField(),
       slug:         text({ validation: { isRequired: true }, isIndexed: 'unique', ui: { description: 'E.g. kuta-seminyak-legian' } }),
-      priceUsd:     integer({ validation: { isRequired: true } }),
+      priceUsd:     integer({ validation: { isRequired: true }, ui: { description: '"From" price, in USD' } }),
       order:        integer({ defaultValue: 0 }),
       translations: relationship({ ref: 'AirportRouteTranslation.airportRoute', many: true }),
     },
@@ -450,7 +473,7 @@ export const lists: Lists = {
     access: publicReadAdminWrite,
     ui: {
       label: 'Airport routes · Translations',
-      labelField: 'locale',
+      labelField: 'displayLabel',
       listView: { initialColumns: ['airportRoute', 'locale', 'to', 'duration'] },
     },
     fields: {
@@ -458,6 +481,7 @@ export const lists: Lists = {
       locale:       text({ validation: { isRequired: true } }),
       to:           text({ validation: { isRequired: true }, ui: { description: 'E.g. Kuta / Seminyak / Legian' } }),
       duration:     text({ ui: { description: 'E.g. ~45 min' } }),
+      displayLabel: displayLabel('to'),
     },
   }),
 
@@ -506,10 +530,10 @@ export const lists: Lists = {
       footerSocialLabel: text(),
       footerCredit:     text({ ui: { description: 'E.g. Web concept by' } }),
 
-      ctaTitle: text(),
+      ctaTitle: text({ ui: { description: 'Headline of the global CTA banner shown at the bottom of the Home page' } }),
       ctaSub:   linesField('CTA banner text (ready to see the real Bali...)'),
-      ctaBtn:   text(),
-      ctaNote:  text(),
+      ctaBtn:   text({ ui: { description: 'Button text of the global CTA banner, e.g. Chat on WhatsApp' } }),
+      ctaNote:  text({ ui: { description: 'Small note under the CTA banner button' } }),
 
       routesSectionOverline: text(),
       routesSectionTitle:    text(),
@@ -550,13 +574,13 @@ export const lists: Lists = {
       page:   relationship({ ref: 'HomePage.translations' }),
       locale: text({ validation: { isRequired: true } }),
 
-      heroTag:    text(),
+      heroTag:    text({ ui: { description: 'Small label above the headline, e.g. PRIVATE BALI GUIDE' } }),
       heroH1a:    text({ ui: { description: 'First line of the headline' } }),
       heroH1b:    text({ ui: { description: 'Second line of the headline (italic)' } }),
       heroSub:    linesField('Hero subtitle'),
-      heroCta1:   text(),
-      heroCta2:   text(),
-      heroScroll: text(),
+      heroCta1:   text({ ui: { description: 'Main hero button text, e.g. Explore the routes' } }),
+      heroCta2:   text({ ui: { description: 'Secondary hero button text, e.g. Meet Made' } }),
+      heroScroll: text({ ui: { description: '"Scroll down" hint text near the bottom of the hero' } }),
 
       heroCardTag:  text(),
       heroCardName: text(),
@@ -605,34 +629,34 @@ export const lists: Lists = {
       page:   relationship({ ref: 'ExperiencesPage.translations' }),
       locale: text({ validation: { isRequired: true } }),
 
-      heroTag: text(),
-      heroH1:  text(),
-      heroH1b: text(),
+      heroTag: text({ ui: { description: 'Small label above the Experiences page headline' } }),
+      heroH1:  text({ ui: { description: 'First line of the Experiences page headline' } }),
+      heroH1b: text({ ui: { description: 'Second line of the Experiences page headline (italic)' } }),
       heroSub: linesField('Experiences hero subtitle'),
 
-      includedOverline: text(),
-      includedTitle:    text(),
+      includedOverline: text({ ui: { description: 'Small label above the "What each route includes" section' } }),
+      includedTitle:    text({ ui: { description: 'Title of the "What each route includes" section' } }),
       includedItems:    json({ defaultValue: [], ui: { description: 'Array [{ icon, text }] — "What each route includes"' } }),
 
-      airportOverline:       text(),
-      airportTitle:          text(),
-      airportTagline:        text(),
-      airportBadge:          text(),
+      airportOverline:       text({ ui: { description: 'Small label above the airport transfer block title' } }),
+      airportTitle:          text({ ui: { description: 'Title of the airport transfer block' } }),
+      airportTagline:        text({ ui: { description: 'Tagline shown right under the airport transfer title' } }),
+      airportBadge:          text({ ui: { description: 'Small badge on the airport transfer block, e.g. Door to door' } }),
       airportPrice:          text({ ui: { description: 'E.g. From $25 / private car' } }),
       airportShortDuration:  text({ ui: { description: 'E.g. 30 min – 3 hours' } }),
-      airportGroupSize:      text(),
+      airportGroupSize:      text({ ui: { description: 'E.g. Up to 6 passengers' } }),
       airportDesc:           linesField('Airport transfer block description'),
-      airportIncluded:       json({ defaultValue: [], ui: { description: 'Array of strings' } }),
-      airportNotIncluded:    json({ defaultValue: [], ui: { description: 'Array of strings' } }),
-      airportRoutesLabel:    text(),
-      airportNote:           text(),
-      airportCta:            text(),
+      airportIncluded:       json({ defaultValue: [], ui: { description: 'Array of strings: what is included in the airport transfer' } }),
+      airportNotIncluded:    json({ defaultValue: [], ui: { description: 'Array of strings: what is not included in the airport transfer' } }),
+      airportRoutesLabel:    text({ ui: { description: 'Title above the airport routes price table' } }),
+      airportNote:           text({ ui: { description: 'Small note shown under the airport routes price table' } }),
+      airportCta:            text({ ui: { description: 'Booking button text for the airport transfer block' } }),
 
-      customTag:    text(),
-      customTitle:  text(),
-      customPrice:  text(),
+      customTag:    text({ ui: { description: 'Small label above the "custom route" block title' } }),
+      customTitle:  text({ ui: { description: 'Title of the "custom route" block (links to the Route Builder)' } }),
+      customPrice:  text({ ui: { description: 'E.g. From $80 / day' } }),
       customDesc:   linesField('"Custom route" block description'),
-      customCta:    text(),
+      customCta:    text({ ui: { description: 'Button text for the "custom route" block, e.g. Build your route' } }),
     },
   }),
 
@@ -672,16 +696,16 @@ export const lists: Lists = {
       quoteText:   linesField('Hero quote (use \\n for line break)'),
       quoteCredit: text({ defaultValue: '— Made' }),
 
-      bioOverline: text(),
-      bioH1:       text(),
-      bioSub:      text(),
+      bioOverline: text({ ui: { description: 'Small label above the biography headline' } }),
+      bioH1:       text({ ui: { description: 'Biography headline, e.g. Meet Made' } }),
+      bioSub:      text({ ui: { description: 'Short subtitle under the biography headline' } }),
       bioP1:       linesField('Biography paragraph 1'),
       bioP2:       linesField('Biography paragraph 2'),
       bioP3:       linesField('Biography paragraph 3'),
 
       availableBadge: text({ ui: { description: 'E.g. Available for private trips' } }),
 
-      valuesOverline: text(),
+      valuesOverline: text({ ui: { description: 'Small label above the "values" section' } }),
       valuesItems:    json({ defaultValue: [], ui: { description: "Array [{ icon, title, desc }] — Made's values" } }),
 
       ctaQuestion: text({ ui: { description: 'E.g. Want to meet Made?' } }),
@@ -720,24 +744,24 @@ export const lists: Lists = {
       page:   relationship({ ref: 'ContactPage.translations' }),
       locale: text({ validation: { isRequired: true } }),
 
-      heroTag: text(),
-      heroH1:  text(),
-      heroH1b: text(),
+      heroTag: text({ ui: { description: 'Small label above the Contact page headline' } }),
+      heroH1:  text({ ui: { description: 'First line of the Contact page headline' } }),
+      heroH1b: text({ ui: { description: 'Second line of the Contact page headline (italic)' } }),
       heroSub: linesField('Contact hero subtitle'),
 
-      formNameLabel:          text(),
-      formEmailLabel:         text(),
-      formMessageLabel:       text(),
-      formMessagePlaceholder: text(),
-      formSubmit:             text(),
-      formSuccessTitle:       text(),
-      formSuccessText:        text(),
-      formOrNote:             text(),
-      formWaBtn:               text(),
-      formWaLabel:             text(),
-      formWaSublabel:          text(),
+      formNameLabel:          text({ ui: { description: 'Label of the "Name" field in the contact form' } }),
+      formEmailLabel:         text({ ui: { description: 'Label of the "Email" field in the contact form' } }),
+      formMessageLabel:       text({ ui: { description: 'Label of the "Message" field in the contact form' } }),
+      formMessagePlaceholder: text({ ui: { description: 'Placeholder text inside the empty "Message" field' } }),
+      formSubmit:             text({ ui: { description: 'Submit button text of the contact form' } }),
+      formSuccessTitle:       text({ ui: { description: 'Title shown after the form is submitted successfully' } }),
+      formSuccessText:        text({ ui: { description: 'Body text shown after the form is submitted successfully' } }),
+      formOrNote:             text({ ui: { description: 'Small "or" divider text between the form and the WhatsApp button' } }),
+      formWaBtn:              text({ ui: { description: 'WhatsApp button text, e.g. Chat on WhatsApp' } }),
+      formWaLabel:            text({ ui: { description: 'Label above the WhatsApp button' } }),
+      formWaSublabel:         text({ ui: { description: 'Small subtitle under the WhatsApp label' } }),
 
-      noteTitle: text(),
+      noteTitle: text({ ui: { description: 'Title of the small note box ("what to include in your message")' } }),
       noteItems: json({ defaultValue: [], ui: { description: 'Array of strings: what to include in the message' } }),
     },
   }),
@@ -804,26 +828,26 @@ export const lists: Lists = {
       page:   relationship({ ref: 'RouteBuilderPage.translations' }),
       locale: text({ validation: { isRequired: true } }),
 
-      tag:               text(),
-      h1:                text(),
-      h1b:               text(),
+      tag:               text({ ui: { description: 'Small label above the Route Builder page headline' } }),
+      h1:                text({ ui: { description: 'First line of the Route Builder page headline' } }),
+      h1b:               text({ ui: { description: 'Second line of the Route Builder page headline (italic)' } }),
       sub:               linesField('Route Builder hero subtitle'),
-      searchPlaceholder: text(),
+      searchPlaceholder: text({ ui: { description: 'Placeholder text inside the destination search box' } }),
       destinationsLabel: text({ ui: { description: 'E.g. destinations' } }),
       yourRoute:         text({ ui: { description: 'E.g. Your Route' } }),
       stops:             text({ ui: { description: 'E.g. stops' } }),
       totalKm:           text({ ui: { description: 'E.g. Total' } }),
-      estimatedTime:     text(),
+      estimatedTime:     text({ ui: { description: 'E.g. Estimated time' } }),
       kmhNote:           text({ ui: { description: 'E.g. Avg. 35 km/h (Bali mountain roads)' } }),
-      addStops:          text(),
-      clearRoute:        text(),
-      bookCta:           text(),
-      bookNote:          text(),
-      removeStop:        text(),
-      alreadyAdded:      text(),
-      addToRoute:        text(),
-      startPoint:        text(),
-      noResults:         text(),
+      addStops:          text({ ui: { description: 'Empty-state text: "add stops to build your route"' } }),
+      clearRoute:        text({ ui: { description: 'Button text to remove all stops from the route' } }),
+      bookCta:           text({ ui: { description: 'Booking button text for the built route' } }),
+      bookNote:          text({ ui: { description: 'Small note shown under the booking button' } }),
+      removeStop:        text({ ui: { description: 'Tooltip/label for the "remove this stop" button' } }),
+      alreadyAdded:      text({ ui: { description: 'Label shown on a destination already added to the route' } }),
+      addToRoute:        text({ ui: { description: 'Button text to add a destination to the route' } }),
+      startPoint:        text({ ui: { description: 'Label for the starting point of the route, e.g. Ubud' } }),
+      noResults:         text({ ui: { description: 'Text shown when a destination search has no results' } }),
       approx:            text({ ui: { description: 'E.g. approx.' } }),
     },
   }),
