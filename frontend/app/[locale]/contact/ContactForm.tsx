@@ -5,11 +5,27 @@ import s from './Contact.module.scss'
 
 export default function ContactForm({ page, waUrl }: { page: ContactPageT; waUrl: string }) {
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
   const [form, setForm] = useState({ name: '', email: '', message: '' })
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setSent(true)
+    setSending(true)
+    setErrorMsg('')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error('send_failed')
+      setSent(true)
+    } catch {
+      setErrorMsg('Something went wrong. Please try WhatsApp instead.')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -41,7 +57,10 @@ export default function ContactForm({ page, waUrl }: { page: ContactPageT; waUrl
               required
             />
           </div>
-          <button type="submit" className={s.submitBtn}>{page.formSubmit}</button>
+          <button type="submit" className={s.submitBtn} disabled={sending}>
+            {sending ? '…' : page.formSubmit}
+          </button>
+          {errorMsg && <p className={s.orNote}>{errorMsg}</p>}
           <p className={s.orNote}>
             {page.formOrNote}{' '}
             <a href={waUrl} target="_blank" rel="noopener noreferrer" className={s.orLink}>{page.formWaBtn}</a>
