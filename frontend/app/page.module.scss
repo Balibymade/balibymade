@@ -1,42 +1,133 @@
-.placeholder {
+$dark:   #0d1a11;
+$forest: #162a1c;
+$gold:   #c9a84c;
+$cream:  #f2ecd8;
+
+.page {
+  position: relative;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background: #0e1a14;
-  color: #f5f0e8;
-  text-align: center;
-  padding: 24px;
+  overflow: hidden;
+  background: $dark;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 25%;
+  transform: scale(1.06);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(160deg, rgba(13,26,17,0.88) 0%, rgba(13,26,17,0.62) 50%, rgba(13,26,17,0.85) 100%),
+    linear-gradient(to bottom, rgba(13,26,17,0.3) 0%, rgba(13,26,17,0.92) 100%);
 }
 
 .inner {
-  max-width: 480px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px 24px;
+  max-width: 560px;
+  width: 100%;
+}
+
+.logoWrap {
+  margin-bottom: 28px;
+}
+
+.logoSub {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: $gold;
+  font-weight: 500;
+  margin-bottom: 2px;
+  opacity: 0.85;
 }
 
 .logo {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2.25rem, 7vw, 4rem);
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  margin: 0 0 16px;
+  font-size: clamp(80px, 18vw, 140px);
+  font-weight: 600;
+  letter-spacing: -3px;
+  color: $cream;
+  margin: 0;
+  line-height: 0.88;
+  font-style: italic;
+}
 
-  span {
-    color: #c9a84c;
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 26px;
+
+  &::before, &::after {
+    content: '';
+    display: block;
+    width: 52px;
+    height: 1px;
   }
+
+  &::before {
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.45));
+  }
+
+  &::after {
+    background: linear-gradient(to left, transparent, rgba(201,168,76,0.45));
+  }
+}
+
+.dividerDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.55);
+  flex-shrink: 0;
 }
 
 .tagline {
   font-family: 'DM Sans', sans-serif;
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  opacity: 0.85;
-  margin: 0 0 8px;
+  font-size: clamp(14px, 2vw, 17px);
+  color: rgba(242,236,216,0.62);
+  margin: 0 0 32px;
+  line-height: 1.7;
+  font-weight: 300;
+  letter-spacing: 0.2px;
 }
 
-.soon {
+.soonBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  border: 1px solid rgba(201,168,76,0.22);
+  border-radius: 50px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
+  font-size: 9px;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  opacity: 0.6;
+  color: rgba(242,236,216,0.42);
+  margin-bottom: 36px;
+  background: rgba(13,26,17,0.45);
+  backdrop-filter: blur(10px);
+}
+
+.badgeDot {
+  width: 5px;
+  height: 5px;
+  background: $gold;
+  border-radius: 50%;
+  opacity: 0.5;
+  flex-shrink: 0;
 }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { getEnabledLocales, getHomePage } from '../lib/queries'
 import PlaceholderLangSwitcher from '../components/PlaceholderLangSwitcher/PlaceholderLangSwitcher'
-import styles from './page.module.scss'
+import s from './page.module.scss'
 
 export const metadata: Metadata = {
   title: 'Bali By Made — Coming soon',
@@ -66,13 +66,21 @@ export default async function PlaceholderPage({
   const soon = COMING_SOON[locale] ?? COMING_SOON.en
 
   return (
-    <main className={styles.placeholder}>
-      <div className={styles.inner}>
-        <h1 className={styles.logo}>
-          Bali<span>By</span>Made
-        </h1>
-        <p className={styles.tagline}>{tagline}</p>
-        <p className={styles.soon}>{soon}</p>
+    <main className={s.page}>
+      <div className={s.bg} style={{ backgroundImage: "url('/demos/balibymade/hero-tegallalang.jpg')" }} />
+      <div className={s.overlay} />
+      <div className={s.inner}>
+        <div className={s.logoWrap}>
+          <span className={s.logoSub}>Bali By</span>
+          <h1 className={s.logo}>Made</h1>
+        </div>
+        <div className={s.divider}><span className={s.dividerDot} /></div>
+        <p className={s.tagline}>{tagline}</p>
+        <div className={s.soonBadge}>
+          <span className={s.badgeDot} />
+          <span>{soon}</span>
+          <span className={s.badgeDot} />
+        </div>
         <PlaceholderLangSwitcher locales={enabledLocales} current={locale} />
       </div>
     </main>
