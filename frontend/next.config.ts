@@ -23,7 +23,7 @@ const securityHeaders = [
       ["script-src 'self' 'unsafe-inline'", isDev ? "'unsafe-eval'" : '', umamiHost ? `https://${umamiHost}` : ''].filter(Boolean).join(' '),
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: https://*.supabase.co",
+      "img-src 'self' data: https://media.balibymade.com",
       [
         "connect-src 'self'",
         isDev ? 'ws://localhost:*' : '',
@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      { protocol: 'https', hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' },
+      { protocol: 'https', hostname: 'media.balibymade.com', pathname: '/images/**' },
     ],
   },
   async headers() {

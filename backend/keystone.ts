@@ -40,18 +40,16 @@ export default withAuth(
       balibymade_media: {
         kind: 's3',
         type: 'image',
-        bucketName: process.env.SUPABASE_STORAGE_BUCKET!,
-        region: process.env.SUPABASE_S3_REGION!,
-        endpoint: process.env.SUPABASE_S3_ENDPOINT!,
-        accessKeyId: process.env.SUPABASE_S3_ACCESS_KEY_ID!,
-        secretAccessKey: process.env.SUPABASE_S3_SECRET_ACCESS_KEY!,
+        bucketName: process.env.R2_BUCKET_NAME!,
+        region: 'auto',
+        endpoint: process.env.R2_S3_ENDPOINT!,
+        accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
         forcePathStyle: true,
-        // Transforma la URL interna de S3 a la URL pública de Supabase Storage
+        // Transforma la URL interna de S3 a la URL pública servida por el dominio de R2
         generateUrl: (url: string) => {
           const filename = url.split('/').pop() ?? ''
-          const publicBase = process.env.SUPABASE_STORAGE_PUBLIC_URL!
-          const bucket = process.env.SUPABASE_STORAGE_BUCKET!
-          return `${publicBase}/storage/v1/object/public/${bucket}/images/${filename}`
+          return `${process.env.R2_PUBLIC_URL}/images/${filename}`
         },
       },
     },
