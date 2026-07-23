@@ -45,7 +45,7 @@ async function doFetch(
 export async function fetchGraphQL<T>(
   query: string,
   variables?: Record<string, unknown>,
-  revalidate = 60,
+  revalidate = 900, // 15 min: menos re-renders ISR en el Worker (menos riesgo de 1102)
 ): Promise<T | null> {
   const onVercel = !!process.env.VERCEL
   const [primary, fallback] = onVercel ? [RENDER_URL, API_URL] : [API_URL, RENDER_URL]

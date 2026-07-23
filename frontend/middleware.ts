@@ -4,47 +4,13 @@ import { routing } from './i18n/routing'
 
 const intlMiddleware = createMiddleware(routing)
 
-const ALL_LOCALES = routing.locales as readonly string[]
-const API_URL    = process.env.NEXT_PUBLIC_API_URL || 'https://api.balibymade.com'
-const RENDER_URL = 'https://balibymade-backend.onrender.com'
-
-// ── Caché de locales habilitados (Edge-compatible) ──────────────────────────
-const CACHE_TTL_MS = 60_000
-let localeCache: { enabled: string[]; at: number } | null = null
-
-async function fetchEnabledLocales(): Promise<string[]> {
-  if (localeCache && Date.now() - localeCache.at < CACHE_TTL_MS) {
-    return localeCache.enabled
-  }
-
-  const query = JSON.stringify({
-    query: '{ localeSettingItems(where: { enabled: { equals: true } }) { code } }',
-  })
-
-  for (const url of [API_URL, RENDER_URL]) {
-    try {
-      const res  = await fetch(`${url}/api/graphql`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: query,
-      })
-      const text = await res.text()
-      if (!text.startsWith('{')) continue
-      const json = JSON.parse(text)
-      const codes: string[] = json?.data?.localeSettingItems?.map((l: { code: string }) => l.code) ?? []
-      if (codes.length > 0) {
-        localeCache = { enabled: codes, at: Date.now() }
-        return codes
-      }
-    } catch {
-      // intenta con el siguiente URL
-    }
-  }
-
-  return [...ALL_LOCALES]
-}
-
-export async function middleware(request: NextRequest) {
+// El middleware corre en CADA petición dentro del Worker de Cloudflare y cuenta
+// para el límite de CPU del plan free (error 1102). Debe ser lo más ligero
+// posible: nada de fetch a la API aquí (antes calentaba una caché de locales
+// que en Workers no persiste entre isolates — era un fetch bloqueante inútil por
+// petición que provocaba 503 bajo carga). El enable/disable de locales lo
+// resuelven las páginas vía getEnabledLocales() (cacheado por ISR).
+export function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl
   const host = request.headers.get('host') ?? ''
 
@@ -74,9 +40,6 @@ export async function middleware(request: NextRequest) {
   ) {
     return NextResponse.next()
   }
-
-  // Web pública desde 2026-07-23 — el preview gate se eliminó en el lanzamiento.
-  await fetchEnabledLocales() // calienta la caché (fallback: todos los locales si Keystone no responde)
 
   return intlMiddleware(request)
 }
