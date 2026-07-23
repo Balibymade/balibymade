@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "dotenv -e .env -- keystone dev",
-    "build": "keystone build",
+    "build": "NODE_OPTIONS=--max-old-space-size=2048 keystone build",
     "migrate": "node scripts/migrate-safe.js",
     "start": "keystone start",
     "start:prod": "npm run migrate && npm run start",
