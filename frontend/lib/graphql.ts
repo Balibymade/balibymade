@@ -1,5 +1,5 @@
 const API_URL    = process.env.NEXT_PUBLIC_API_URL || 'https://api.balibymade.com'
-const RENDER_URL  = 'https://balibymade-backend.onrender.com'
+const RENDER_URL  = 'https://balibymade.onrender.com'
 
 async function doFetch(
   url: string,
@@ -13,7 +13,9 @@ async function doFetch(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),
       next: { revalidate },
-      signal: AbortSignal.timeout(10_000),
+      // 25s: el backend Render (0.1 CPU) puede tardar bajo la ráfaga de fetches
+      // del build (132 páginas prerenderizadas) o en cold start.
+      signal: AbortSignal.timeout(25_000),
     })
 
     if (!res.ok) {
@@ -48,10 +50,13 @@ export async function fetchGraphQL<T>(
   const onVercel = !!process.env.VERCEL
   const [primary, fallback] = onVercel ? [RENDER_URL, API_URL] : [API_URL, RENDER_URL]
 
-  for (let attempt = 0; attempt < 2; attempt++) {
+  // 3 intentos con backoff creciente — durante el build, la ráfaga de fetches
+  // satura momentáneamente el backend Render (0.1 CPU); reintentar deja que se
+  // recupere en vez de generar la página como 404.
+  for (let attempt = 0; attempt < 3; attempt++) {
     const r = await doFetch(primary, query, variables, revalidate)
     if (r !== null) return r as T
-    if (attempt === 0) await new Promise(r => setTimeout(r, 1500))
+    await new Promise(r => setTimeout(r, 1500 * (attempt + 1)))
   }
 
   if (primary !== fallback) {

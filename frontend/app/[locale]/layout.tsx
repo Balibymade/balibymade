@@ -5,6 +5,16 @@ import { CookieConsent } from '../../components/CookieConsent/CookieConsent'
 import { routing } from '../../i18n/routing'
 import { getEnabledLocales, getSiteChrome, getSiteSettings } from '../../lib/queries'
 
+// Pre-renderiza los 22 locales en build → se sirven como HTML cacheado (ISR),
+// no SSR en cada visita. Evita el error 1102 (CPU del Worker) — ver
+// open-next.config.ts. El HTML se regenera en segundo plano cada `revalidate`
+// segundos, así que los cambios de Keystone se reflejan en ≤10 min sin redeploy.
+export function generateStaticParams() {
+  return routing.locales.map(locale => ({ locale }))
+}
+
+export const revalidate = 600
+
 export default async function LocaleLayout({
   children,
   params,

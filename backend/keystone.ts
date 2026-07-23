@@ -23,9 +23,13 @@ export default withAuth(
       },
       extendExpressApp: (app) => {
         // Rate limiting en la API GraphQL: 120 req/min por IP
+        // 600/min por IP: protege de abuso pero deja pasar el build del frontend
+        // (que pre-genera 22 locales → ~290 queries en ráfaga desde una sola IP) y
+        // picos legítimos. Con 120/min el build fallaba con 429 y generaba páginas
+        // vacías. Ver feedback_render_build_oom_cpus / ISR del frontend.
         app.use('/api/graphql', rateLimit({
           windowMs: 60 * 1000,
-          max: 120,
+          max: 600,
           standardHeaders: true,
           legacyHeaders: false,
           message: { error: 'Too many requests, please try again later.' },
