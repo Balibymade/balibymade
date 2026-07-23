@@ -62,24 +62,20 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/api')     ||
     pathname.startsWith('/flags/')  ||
     pathname.startsWith('/demos/')  ||
+    pathname.startsWith('/images/') ||
+    pathname.startsWith('/orejime/')||
     pathname.startsWith('/favicon') ||
     pathname === '/icon.png' ||
     pathname === '/apple-icon.png' ||
+    pathname === '/og.jpg' ||
+    pathname === '/llms.txt' ||
     pathname === '/sitemap.xml' ||
     pathname === '/robots.txt'
   ) {
     return NextResponse.next()
   }
 
-  // Preview gate: sin ?preview=true, todo el tráfico ve el placeholder de la home
-  const isPreview = searchParams.get('preview') === 'true'
-  if (!isPreview && pathname !== '/') {
-    return NextResponse.rewrite(new URL('/', request.url))
-  }
-  if (!isPreview) {
-    return NextResponse.next()
-  }
-
+  // Web pública desde 2026-07-23 — el preview gate se eliminó en el lanzamiento.
   await fetchEnabledLocales() // calienta la caché (fallback: todos los locales si Keystone no responde)
 
   return intlMiddleware(request)
