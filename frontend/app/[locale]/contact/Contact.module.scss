@@ -326,3 +326,27 @@ $terraH: #a04830;
 
 // Need to reference contactWa for the contact form translations
 .contactWa, .contactIg { display: none; }
+
+// Checkbox de consentimiento RGPD (añadido pre-lanzamiento 2026-07-23)
+.consentRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0.25rem 0 1rem;
+  cursor: pointer;
+}
+
+.consentBox {
+  margin-top: 0.2rem;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.consentText {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #5c5647;
+}

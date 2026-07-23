@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
+import { CookieConsent } from '../../components/CookieConsent/CookieConsent'
 import { routing } from '../../i18n/routing'
 import { getEnabledLocales, getSiteChrome, getSiteSettings } from '../../lib/queries'
 
@@ -29,7 +30,7 @@ export default async function LocaleLayout({
     name: settings?.businessName ?? 'Bali By Made',
     description: chrome.ctaSub,
     url: 'https://balibymade.com',
-    image: 'https://balibymade.com/demos/balibymade/hero-tegallalang.jpg',
+    image: 'https://balibymade.com/og.jpg',
     areaServed: { '@type': 'Place', name: 'Bali, Indonesia' },
     address: { '@type': 'PostalAddress', addressLocality: 'Ubud', addressRegion: 'Bali', addressCountry: 'ID' },
     ...(settings?.whatsappNumber ? { telephone: `+${settings.whatsappNumber}` } : {}),
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
       />
       {children}
       <Footer locale={locale} chrome={chrome} settings={settings} />
+      <CookieConsent locale={locale} />
     </>
   )
 }

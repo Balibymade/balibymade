@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "balibymade",
-  "main": ".open-next/worker.js",
+  "main": "custom-worker.ts", // wrapper de Sentry sobre .open-next/worker.js (§24.4)
   "compatibility_date": "2026-06-01",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {

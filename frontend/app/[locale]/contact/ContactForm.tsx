@@ -1,12 +1,17 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import type { ContactPageT } from '../../../lib/queries'
+import { cookieStrings } from '../../../lib/legalDict'
+import { link } from '../../../lib/links'
 import s from './Contact.module.scss'
 
-export default function ContactForm({ page, waUrl }: { page: ContactPageT; waUrl: string }) {
+export default function ContactForm({ page, waUrl, locale }: { page: ContactPageT; waUrl: string; locale: string }) {
+  const t = cookieStrings(locale)
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const [consent, setConsent] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', message: '' })
 
   async function handleSubmit(e: React.FormEvent) {
@@ -57,7 +62,22 @@ export default function ContactForm({ page, waUrl }: { page: ContactPageT; waUrl
               required
             />
           </div>
-          <button type="submit" className={s.submitBtn} disabled={sending}>
+          <label className={s.consentRow}>
+            <input
+              type="checkbox"
+              className={s.consentBox}
+              checked={consent}
+              onChange={e => setConsent(e.target.checked)}
+              required
+            />
+            <span className={s.consentText}>
+              {t.consentLabel}{' '}
+              <Link href={link(locale, '/privacy')} target="_blank" className={s.orLink}>
+                {t.consentLinkText}
+              </Link>
+            </span>
+          </label>
+          <button type="submit" className={s.submitBtn} disabled={sending || !consent}>
             {sending ? '…' : page.formSubmit}
           </button>
           {errorMsg && <p className={s.orNote}>{errorMsg}</p>}

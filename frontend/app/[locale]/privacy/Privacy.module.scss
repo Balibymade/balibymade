@@ -1,0 +1,67 @@
+.page {
+  background: #fff;
+  padding: 9rem 0 5rem; // deja sitio al header fijo
+  min-height: 60vh;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.overline {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 0.75rem;
+}
+
+.h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem;
+  line-height: 1.1;
+}
+
+.updated {
+  font-size: 0.85rem;
+  color: #8a8577;
+  margin: 0 0 2.5rem;
+}
+
+.section { margin-bottom: 2rem; }
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 0.6rem;
+}
+
+.para {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #3d3a32;
+  margin: 0 0 0.8rem;
+}
+
+.contact {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(201, 168, 76, 0.3);
+  font-size: 0.95rem;
+  color: #3d3a32;
+}
+
+.contactLink {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

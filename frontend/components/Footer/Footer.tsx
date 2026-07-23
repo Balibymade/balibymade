@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { SiteChrome, SiteSettings } from '../../lib/queries'
 import { link } from '../../lib/links'
+import { cookieStrings } from '../../lib/legalDict'
 import s from './Footer.module.scss'
 
 interface Props { locale: string; chrome: SiteChrome; settings: SiteSettings | null }
@@ -55,6 +56,10 @@ export default function Footer({ locale, chrome, settings }: Props) {
         </span>
         <span className={s.dot}>·</span>
         <span className={s.copy}>balibymade.com</span>
+        <span className={s.dot}>·</span>
+        <Link href={link(locale, '/privacy')} className={s.credit}>
+          {cookieStrings(locale).privacyLabel}
+        </Link>
       </div>
     </footer>
   )

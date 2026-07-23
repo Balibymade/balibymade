@@ -64,7 +64,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               </div>
             </div>
 
-            <ContactForm page={page} waUrl={waUrl} />
+            <ContactForm page={page} waUrl={waUrl} locale={locale} />
           </div>
         </div>
       </section>

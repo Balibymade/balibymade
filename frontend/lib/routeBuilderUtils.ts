@@ -18,10 +18,15 @@ export function roadKm(a: Destination, b: Destination): number {
   return Math.round(haversineKm(a.lat, a.lng, b.lat, b.lng) * ROAD_FACTOR)
 }
 
+// Precios reales de Kadek (2026-07-16): Full day trip (10h) = $50, Half day
+// trip (5h) = $30. La estimación clasifica la ruta en medio día o día completo
+// según el tiempo total estimado (conducción a 35 km/h de media en Bali) y
+// devuelve el precio del tramo — no hay fórmula por km, es una tarifa plana
+// por tipo de día. Made confirma el precio final por WhatsApp.
 export function estimatePrice(totalKm: number): number {
-  const base = 45
-  const perKm = 0.7
-  return Math.max(50, Math.ceil((base + totalKm * perKm) / 5) * 5)
+  const drivingHours = totalKm / 35
+  const HALF_DAY_MAX_DRIVING = 2.5 // ~mitad de las 5h de un half day son conducción
+  return drivingHours <= HALF_DAY_MAX_DRIVING ? 30 : 50
 }
 
 export function formatTime(totalKm: number): string {

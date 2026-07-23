@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import './globals.scss'
 
 export const metadata: Metadata = {
@@ -7,11 +6,9 @@ export const metadata: Metadata = {
   description: 'Your private guide to the real Bali.',
 }
 
+// Umami ya no se inyecta aquí: lo carga CookieConsent (components/CookieConsent)
+// SOLO cuando el visitante acepta la categoría "analytics" de Orejime.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const umamiUrl = process.env.NEXT_PUBLIC_UMAMI_URL?.replace(/\/$/, '')
-  const umamiId  = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID
-  const isProd   = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -22,14 +19,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {children}
-        {isProd && umamiUrl && umamiId && (
-          <Script
-            src={`${umamiUrl}/script.js`}
-            data-website-id={umamiId}
-            strategy="afterInteractive"
-            defer
-          />
-        )}
       </body>
     </html>
   )

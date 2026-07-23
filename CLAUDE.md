@@ -1,15 +1,26 @@
 # balibymade.com — Contexto para Claude Code
 
+> **Memoria**: antes de nada, leer `/Users/ana/.claude/projects/-Users-ana-Documents-Proyectos-Web/memory/project_balibymade_reciente.md` (contexto rápido) y, si hace falta reconstruir a fondo, `project_balibymade.md` (memoria general).
+> **Credenciales**: `/Users/ana/Documents/Proyectos/Web/.credentials/balibymade.com.md` (solo la ruta — nunca credenciales en claro aquí).
+
 ## Cuentas y accesos
 
-- **Repositorio**: https://github.com/pablopedrosa7/balibymade.com (cuenta GitHub: `pablopedrosa7`)
-- **Email para todos los registros** (Cloudflare, Vercel, Render, Supabase, registrador dominio):
-  `pablo+balibymade@pablopedrosa.com` (alias "+" sobre el buzón de Google Workspace de
-  `pablopedrosa.com` — no se pudo crear un Gmail dedicado nuevo por bloqueo de verificación SMS
-  desde Japón). Todo llega a la bandeja habitual de `pablo@pablopedrosa.com`, filtrable por ese
-  alias.
-- Email público del negocio: `hola@balibymade.com` (pendiente de configurar vía Cloudflare Email
-  Routing → reenvío a `pablo@pablopedrosa.com`)
+- **Dos repositorios GitHub — patrón estándar de todos los proyectos** (cada commit se pushea
+  a los dos: `git push origin main && git push render main`):
+  - `https://github.com/Balibymade/balibymade` (remoto `render`) — **repo del proyecto, el
+    principal: toda la infra tira de este** (Render ya despliega desde aquí).
+  - `https://github.com/pablopedrosa7/balibymade.com` (remoto `origin`) — clon/backup, nada
+    apunta a él.
+- **Cuenta GitHub `Balibymade`**: email principal `balibymade.com@balibymade.com`
+  (cambiado 2026-07-23).
+- **Email del proyecto**: `balibymade.com@balibymade.com` — alias de Cloudflare Email Routing
+  que reenvía a `pablo@pablopedrosa.com` (activo desde 2026-06-29). Para nuevos registros de
+  servicios usar este alias. Registros antiguos (Cloudflare, Render, Supabase, Dinahosting)
+  se hicieron con `pablo+balibymade@pablopedrosa.com` (alias "+" de Google Workspace, llega al
+  mismo buzón).
+- **Email público del negocio: `ikadekwirata7@gmail.com`** (el real del cliente, ya en
+  `SiteSettings.contactEmail`). ⚠️ NO crear emails/aliases inventados tipo `hola@` — regla de
+  Pablo 2026-07-23: todos los emails que deban recibirse van al email real del cliente.
 
 ## Descripción del proyecto
 
@@ -17,7 +28,7 @@ Web de Made, guía privado local en Bali (tours en coche privado, transfers de a
 constructor de rutas a medida). Basada en la demo aprobada en
 `pablopedrosa.com/demo/balibymade` (login `balibymade`).
 
-- **Blueprint de referencia**: `/Users/ana/Documents/Proyectos/Web/WEB_BLUEPRINT.md` (sección 28
+- **Blueprint de referencia**: `/Users/ana/Documents/Proyectos/Web/WEB_BLUEPRINT_v2.md` (sección 15
   específicamente: "Demo → sitio real 100% configurable en Keystone")
 - **Patrón elegido**: TODO el contenido (incluidos textos de UI fijos: nav, hero, footer, botones)
   vive en Keystone, en los 22 idiomas. No se usa `messages/[locale].json` de next-intl — next-intl

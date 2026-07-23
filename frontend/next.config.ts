@@ -30,6 +30,8 @@ const securityHeaders = [
         isDev ? 'http://localhost:*' : '',
         apiHost   ? `https://${apiHost}`   : '',
         umamiHost ? `https://${umamiHost}` : '',
+        'https://*.ingest.sentry.io',    // errores del navegador → Sentry
+        'https://*.ingest.de.sentry.io',
       ].filter(Boolean).join(' '),
       "frame-src https://wa.me",
       "object-src 'none'",

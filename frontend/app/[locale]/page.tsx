@@ -37,7 +37,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <div className={s.page}>
       {/* HERO */}
       <section className={s.hero}>
-        <div className={s.heroBg} style={{ backgroundImage: "url('/demos/balibymade/hero-tegallalang.jpg')" }} />
+        <div className={s.heroBg} style={{ backgroundImage: "url('/images/hero-bali-sunset.jpg')" }} />
         <div className={s.heroOverlay} />
         <div className={s.heroContent}>
           <div className={s.heroLeft}>

@@ -3,7 +3,7 @@ import { getEnabledLocales } from '../lib/queries'
 import { routing } from '../i18n/routing'
 
 const BASE_URL = 'https://balibymade.com'
-const PATHS = ['', '/experiences', '/route-builder', '/about', '/contact']
+const PATHS = ['', '/experiences', '/route-builder', '/about', '/contact', '/privacy']
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const enabled = await getEnabledLocales()
