@@ -1,5 +1,21 @@
 # balibymade.com — Contexto para Claude Code
 
+<!-- workers-builds-reminder -->
+> ⚠️ **PENDIENTE al próximo commit de esta web: conectar el despliegue al repo (Cloudflare Workers Builds).**
+> Hoy esta web se despliega con `npm run cf:deploy` **local** (no tira del repo). La próxima vez que
+> toquemos esta web, conectar el Worker a ESTE repositorio para que haga auto-deploy en cada push a
+> `main`, siguiendo `WEB_BLUEPRINT_v2.md` **§35.20**:
+> - Panel Cloudflare → Worker → Settings → Build → *Connect* → este repo (el PRIMARIO si hay varios
+>   remotos), rama `main`, **root `frontend`**, build `npx opennextjs-cloudflare build`, deploy
+>   `npx wrangler deploy`.
+> - Poner `NEXT_PUBLIC_API_URL=https://api.<dominio>` (y cualquier otra var de build, p. ej.
+>   `DOMMIVA_BACKEND_ORIGIN`) como **Build env var**, y relajar el pre-check `check:prod-env`
+>   (rompe el build en CI porque `.env.production.local` está gitignored — ver §35.20).
+> - La conexión GitHub↔Cloudflare (OAuth de la GitHub App de Cloudflare) la autoriza Pablo en el
+>   panel, una vez por cuenta.
+> **Al dejarlo conectado y verificado (push → build → deploy), borrar este aviso.**
+
+
 > **Memoria**: antes de nada, leer `/Users/ana/.claude/projects/-Users-ana-Documents-Proyectos-Web/memory/project_balibymade_reciente.md` (contexto rápido) y, si hace falta reconstruir a fondo, `project_balibymade.md` (memoria general).
 > **Credenciales**: `/Users/ana/Documents/Proyectos/Web/.credentials/balibymade.com.md` (solo la ruta — nunca credenciales en claro aquí).
 
